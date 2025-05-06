@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_roles', function (Blueprint $table) {
+        Schema::create('user_detail_user_roles', function (Blueprint $table) {
             $table->id();
-
-			$table->string('name');
-			$table->text('description');
-			$table->string('level');
-			$table->boolean('status')->default(false);
-
+            
 			$table->datetime('created_at');
             $table->string('created_at_timezone', 10)->nullable();
             $table->integer('created_by_user_id')->nullable();
@@ -30,6 +25,9 @@ return new class extends Migration
             $table->string('updated_by_username', 45)->nullable();
             $table->string('updated_by_user_type', 45)->nullable();
             $table->boolean('enabled')->default(true);
+
+			$table->foreignId('user_detail_id')->constrained('user_details')->cascadeOnDelete();
+			$table->foreignId('user_role_id')->constrained('user_roles')->cascadeOnDelete();
         });
     }
 
@@ -38,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_roles');
+        Schema::dropIfExists('user_detail_user_roles');
     }
 };

@@ -6,7 +6,6 @@
 /storage/*.key
 /storage/pail
 /vendor
-/grpc
 .env
 .env.backup
 .env.production
@@ -21,4 +20,4 @@ yarn-error.log
 /.idea
 /.nova
 /.vscode
-/.zed
+/.zedrr

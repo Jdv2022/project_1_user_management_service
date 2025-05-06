@@ -37,6 +37,8 @@ return new class extends Migration
             $table->string('updated_by_username', 45)->nullable();
             $table->string('updated_by_user_type', 45)->nullable();
             $table->boolean('enabled')->default(true);
+
+			$table->unsignedBigInteger('user_id');
         });
     }
 

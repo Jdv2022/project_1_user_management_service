@@ -22,7 +22,6 @@ if [ "$confirm" == "yes" ]; then
     echo "Running migrations and seeders..."
     php artisan migrate --force
     php artisan db:seed --force
-    php artisan app:setup-environment 
     echo "Migrations and seed completed."
 else
     echo "Operation aborted."
