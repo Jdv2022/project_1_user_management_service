@@ -25,7 +25,74 @@ class DatabaseSeeder extends Seeder
         }
 
         if (!UserRole::exists()) {
-            UserRole::factory()->create();
+            UserRole::insert(
+				[
+					[
+						'type_1' => 'Admin',
+						'description' => 'Highest level in the hierarchy with full access',
+						'level' => '1',
+						'status' => true,
+						'created_at' => now(),
+						'created_at_timezone' => '+08:00',
+						'created_by_user_id' => 0,
+						'created_by_username' => 'factory',
+						'created_by_user_type' => 'dev',
+						'updated_at' => now(),
+						'updated_at_timezone' => '+08:00',
+						'updated_by_user_id' => 0,
+						'updated_by_username' => 'factory',
+						'updated_by_user_type' => 'dev',
+					],
+					[
+						'type_1' => 'Manager',
+						'description' => 'Responsible for managing team operations',
+						'level' => '2',
+						'status' => true,
+						'created_at' => now(),
+						'created_at_timezone' => '+08:00',
+						'created_by_user_id' => 0,
+						'created_by_username' => 'factory',
+						'created_by_user_type' => 'dev',
+						'updated_at' => now(),
+						'updated_at_timezone' => '+08:00',
+						'updated_by_user_id' => 0,
+						'updated_by_username' => 'factory',
+						'updated_by_user_type' => 'dev',
+					],
+					[
+						'type_1' => 'Supervisor',
+						'description' => 'Oversees day-to-day activities of employees',
+						'level' => '3',
+						'status' => true,
+						'created_at' => now(),
+						'created_at_timezone' => '+08:00',
+						'created_by_user_id' => 0,
+						'created_by_username' => 'factory',
+						'created_by_user_type' => 'dev',
+						'updated_at' => now(),
+						'updated_at_timezone' => '+08:00',
+						'updated_by_user_id' => 0,
+						'updated_by_username' => 'factory',
+						'updated_by_user_type' => 'dev',
+					],
+					[
+						'type_1' => 'User',
+						'description' => 'Basic access with limited permissions',
+						'level' => '4',
+						'status' => true,
+						'created_at' => now(),
+						'created_at_timezone' => '+08:00',
+						'created_by_user_id' => 0,
+						'created_by_username' => 'factory',
+						'created_by_user_type' => 'dev',
+						'updated_at' => now(),
+						'updated_at_timezone' => '+08:00',
+						'updated_by_user_id' => 0,
+						'updated_by_username' => 'factory',
+						'updated_by_user_type' => 'dev',
+					],
+				]
+			);
             $this->command->info("Initial UserRole detail populated!");
         } else {
             $this->command->info("Initial UserRole detail already exists!");

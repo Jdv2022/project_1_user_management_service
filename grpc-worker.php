@@ -5,8 +5,10 @@ use Spiral\RoadRunner\GRPC\Invoker;
 use Spiral\RoadRunner\GRPC\Server;
 use Spiral\RoadRunner\Worker;
 use grpc\GetUserDetails\GetUserDetailsServiceInterface;
-use grpc\GetUserDetails\RegisterServiceInterface;
+use grpc\Register\RegisterServiceInterface;
+use App\Grpc\Controllers\RegisterUserController;
 use App\Grpc\Controllers\UserDetailsController;
+use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
 $app = require_once __DIR__.'/bootstrap/app.php';
@@ -16,6 +18,7 @@ $server = new Server(new Invoker(), [
     'debug' => false, 
 ]);
 
-$server->registerService(GetUserDetailsServiceInterface::class, new UserDetailsController());
+$server->registerService(RegisterServiceInterface::class, new RegisterUserController(new CommonFunctions));
+$server->registerService(GetUserDetailsServiceInterface::class, new UserDetailsController(new CommonFunctions));
 
 $server->serve(Worker::create());

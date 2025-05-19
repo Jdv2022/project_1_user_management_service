@@ -9,4 +9,6 @@ class UserDetailUserRole extends __SystemBaseModel {
 
     use HasFactory;
 
+	protected $guarded = [];
+
 }

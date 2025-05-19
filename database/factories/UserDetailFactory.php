@@ -22,9 +22,7 @@ class UserDetailFactory extends Factory {
 			'email' => 'superuser@superuser',
 			'phone' => '0000000000',
 			'address' => 'root',
-			'country' => 'root',
 			'date_of_birth' => now(),
-			'age' => 0,
 			'gender' => true,
 			'profile_image' => 'default.jpg',
 			

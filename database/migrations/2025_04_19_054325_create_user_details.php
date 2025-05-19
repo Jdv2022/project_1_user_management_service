@@ -20,9 +20,7 @@ return new class extends Migration
 			$table->string('email');
 			$table->string('phone');
 			$table->string('address');
-			$table->string('country');
 			$table->date('date_of_birth');
-			$table->integer('age');
 			$table->string('gender');
 			$table->string('profile_image');
 

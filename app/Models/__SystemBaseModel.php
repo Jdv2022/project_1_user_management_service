@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Services\AuthUserService;
 use Carbon\Carbon;
+use Log;
+use App\Grpc\Services\ActionByUserService;
 
-class __SystemBaseModel extends Model {
-
-    protected AuthUserService $authUserService;
+class __SystemBaseModel extends Model
+{
     public $timestamps = false;
 
     public function __construct(array $attributes = []) {
@@ -18,17 +18,18 @@ class __SystemBaseModel extends Model {
     protected static function boot() {
         parent::boot();
 
-        // static::creating(function ($model) {
-        //     $model->setCreatedAttributes();
-        // });
+        static::creating(function ($model) {
+            $model->setCreatedAttributes();
+            $model->setUpdatedAttributes();
+        });
 
-        // static::updating(function ($model) {
-        //     $model->setUpdatedAttributes();
-        // });
+        static::updating(function ($model) {
+            $model->setUpdatedAttributes();
+        });
     }
 
     private function getAuthUser():array {
-        return app(AuthUserService::class)->getUser();
+        return app(ActionByUserService::class)->authUser();
     }
 
     private function setCreatedAttributes():void {

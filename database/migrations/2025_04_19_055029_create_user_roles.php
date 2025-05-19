@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
 
-			$table->string('name');
+			$table->string('type_1');
 			$table->text('description');
 			$table->string('level');
 			$table->boolean('status')->default(false);

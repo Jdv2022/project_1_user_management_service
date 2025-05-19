@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class UserDetail extends __SystemBaseModel {
 	
     use HasFactory;
+
+	protected $guarded = [];
 	
 	public function userRoles() {
 		return $this->belongsToMany(UserRole::class, 'user_detail_user_roles', 'user_detail_id', 'user_role_id')
