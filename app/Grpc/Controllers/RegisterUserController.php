@@ -39,9 +39,10 @@ class RegisterUserController extends ActionByMiddleware implements RegisterServi
 			'address' => $in->getAddress(),
 			'date_of_birth' => $in->getDateOfBirth(),
 			'gender' => $in->getGender(),
-			'profile_image' => $in->getProfileImage(),
 			'enabled' => true,
 			'user_id' => $in->getFk(),
+			'profile_image_url' => $in->getSetProfileImageURL(),
+			'profile_image_name' => $in->getSetProfileImageName(),
 		];
 
 		$actionByUser = Redis::get($id);	

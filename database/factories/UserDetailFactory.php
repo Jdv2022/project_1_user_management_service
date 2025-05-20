@@ -24,7 +24,8 @@ class UserDetailFactory extends Factory {
 			'address' => 'root',
 			'date_of_birth' => now(),
 			'gender' => true,
-			'profile_image' => 'default.jpg',
+			'profile_image_url' => 'null',
+			'profile_image_name' => 'null',
 			
             'created_at' => now(),
             'created_at_timezone' => '+08:00',

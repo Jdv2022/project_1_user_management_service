@@ -18,6 +18,19 @@ class __SystemBaseModel extends Model
     protected static function boot() {
         parent::boot();
 
+		// Disable this CLASS when running this commands
+		if (app()->runningInConsole()) {
+			$artisanCommandsToSkip = ['migrate', 'db:seed', 'db:wipe', 'cache:clear', 'config:cache'];
+		
+			$calledCommand = collect($_SERVER['argv'] ?? [])->implode(' ');
+		
+			foreach ($artisanCommandsToSkip as $cmd) {
+				if (str_contains($calledCommand, $cmd)) {
+					return;
+				}
+			}
+		}
+
         static::creating(function ($model) {
             $model->setCreatedAttributes();
             $model->setUpdatedAttributes();

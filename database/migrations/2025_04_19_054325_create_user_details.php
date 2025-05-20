@@ -22,7 +22,8 @@ return new class extends Migration
 			$table->string('address');
 			$table->date('date_of_birth');
 			$table->string('gender');
-			$table->string('profile_image');
+			$table->string('profile_image_url');
+			$table->string('profile_image_name');
 
 			$table->datetime('created_at');
             $table->string('created_at_timezone', 10)->nullable();

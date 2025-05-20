@@ -24,7 +24,8 @@ class CommonFunctions {
 			$responseModel->setUserDetailsAddress($userDetailsObj->address);
 			$responseModel->setUserDetailsDateOfBirth($userDetailsObj->date_of_birth);
 			$responseModel->setUserDetailsGender($userDetailsObj->gender);
-			$responseModel->setUserDetailsProfileImage($userDetailsObj->profile_image);
+			$responseModel->setUserDetailsProfileImageURL($userDetailsObj->profile_image);
+			$responseModel->setUserDetailsProfileImageName($userDetailsObj->profile_image);
 			$responseModel->setUserDetailsCreatedAt($userDetailsObj->created_at);
 			$responseModel->setUserDetailsCreatedAtTimezone($userDetailsObj->created_at_timezone);
 			$responseModel->setUserDetailsCreatedByUserId($userDetailsObj->created_by_user_id);
