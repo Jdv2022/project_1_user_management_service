@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\UserDetail;
 use App\Models\UserRole;
 use App\Models\UserDetailUserRole;
+use App\Models\UserDepartment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -96,6 +97,13 @@ class DatabaseSeeder extends Seeder
             $this->command->info("Initial UserRole detail populated!");
         } else {
             $this->command->info("Initial UserRole detail already exists!");
+        }
+
+		if (!UserDepartment::exists()) {
+            UserDepartment::factory()->create();
+            $this->command->info("Initial UserDepartment detail populated!");
+        } else {
+            $this->command->info("Initial UserDepartment detail already exists!");
         }
 
         if (!UserDetailUserRole::exists()) {

@@ -29,4 +29,22 @@ class UserDetail extends __SystemBaseModel {
 			]);	
 	}
 
+	public function userDepartments() {
+		return $this->belongsToMany(UserDepartment::class, 'user_detail_user_departments', 'user_detail_id', 'user_department_id')
+			->withPivot([
+				'id',
+				'created_at',
+				'created_at_timezone',
+				'created_by_user_id',
+				'created_by_username',
+				'created_by_user_type',
+				'updated_at',
+				'updated_at_timezone',
+				'updated_by_user_id',
+				'updated_by_username',
+				'updated_by_user_type',
+				'enabled'
+			]);	
+	}
+
 }
