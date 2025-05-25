@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Grpc\Controllers;
+namespace App\Grpc\Handlers;
 
 use Spiral\RoadRunner\GRPC\ContextInterface;
 use App\Models\UserRole;
@@ -13,7 +13,7 @@ use grpc\userRegistrationFormData\UserRegistrationFormDataRequest;
 use grpc\userRegistrationFormData\UserRegistrationFormDataResponse;
 use grpc\userRegistrationFormData\UserRegistrationFormDataServiceInterface;
 
-class RegistrationFormDataController extends ActionByMiddleware implements UserRegistrationFormDataServiceInterface {
+class RegistrationFormDataHandler extends ActionByMiddleware implements UserRegistrationFormDataServiceInterface {
 
 	public function __construct(CommonFunctions $commonFunctions) {
 		$this->commonFunctions = $commonFunctions;

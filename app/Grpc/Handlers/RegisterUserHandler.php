@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Grpc\Controllers;
+namespace App\Grpc\Handlers;
 
 use grpc\Register\RegisterServiceInterface;
 use grpc\Register\RegisterUserDetailsRequest;
@@ -16,14 +16,14 @@ use App\Grpc\Services\CommonFunctions;
 use Log;
 use App\Grpc\Middlewares\ActionByMiddleware;
 
-class RegisterUserController extends ActionByMiddleware implements RegisterServiceInterface {
+class RegisterUserHandler extends ActionByMiddleware implements RegisterServiceInterface {
 
 	public function __construct(CommonFunctions $commonFunctions) {
 		$this->commonFunctions = $commonFunctions;
 	}
 
 	public function RegisterUserDetails(ContextInterface $ctx, RegisterUserDetailsRequest $in): RegisterUserDetailsResponse {
-		Log::info("[Register Controller] User details id " . $in->getFk());
+		Log::info("[Register Handler] User details id " . $in->getFk());
 
 		$id = $in->getActionByUserId();
 		$this->initializeActionByUser((int)$id);
