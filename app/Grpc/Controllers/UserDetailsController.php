@@ -20,13 +20,8 @@ class UserDetailsController extends ActionByMiddleware implements GetUserDetails
 	}
 
 	public function GetUserDetails(ContextInterface $ctx, GetUserDetailsRequest $in): GetUserDetailsResponse {
-		$id = $in->getActionByUserId();
+		$id = $in->getFk();
 		Log::info("[UserDetailsController Controller] User details id " . $id);
-		$this->initializeActionByUser($id);
-
-		$userDetailsObj = UserDetail::with(['userRoles'])
-			->where('user_id', $id)
-			->first();
 
 		return $this->commonFunctions->setUserDetailReturn($id, new GetUserDetailsResponse());    
 	}

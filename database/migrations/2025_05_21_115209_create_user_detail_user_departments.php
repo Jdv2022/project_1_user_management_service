@@ -27,7 +27,7 @@ return new class extends Migration
             $table->boolean('enabled')->default(true);
 
 			$table->foreignId('user_detail_id')->constrained('user_details')->cascadeOnDelete();
-			$table->foreignId('user_deparmtent_id')->constrained('user_departments')->cascadeOnDelete();
+			$table->foreignId('user_department_id')->constrained('user_departments')->cascadeOnDelete();
         });
     }
 

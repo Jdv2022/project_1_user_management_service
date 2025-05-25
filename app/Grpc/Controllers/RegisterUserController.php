@@ -9,6 +9,8 @@ use Spiral\RoadRunner\GRPC\ContextInterface;
 use App\Models\UserDetail;
 use App\Models\UserDetailUserRole;
 use App\Models\UserRole;
+use App\Models\UserDepartment;
+use App\Models\UserDetailUserDepartment;
 use Illuminate\Support\Facades\Redis;
 use App\Grpc\Services\CommonFunctions;
 use Log;
@@ -37,7 +39,7 @@ class RegisterUserController extends ActionByMiddleware implements RegisterServi
 			'email' => $in->getEmail(),
 			'phone' => $in->getPhone(),
 			'address' => $in->getAddress(),
-			'date_of_birth' => $in->getDateOfBirth(),
+			'date_of_birth' => date('Y-m-d H:i:s', strtotime($in->getDateOfBirth())),
 			'gender' => $in->getGender(),
 			'enabled' => true,
 			'user_id' => $in->getFk(),
@@ -47,9 +49,46 @@ class RegisterUserController extends ActionByMiddleware implements RegisterServi
 
 		$actionByUser = Redis::get($id);	
 		$userDetail = new UserDetail();
-		$userDetail->create($data);
+		$createdUser = $userDetail->create($data);
+		$userDetail = UserRole::where('type_1', $in->getPosition())->first();
+		if($userDetail && $createdUser) {
+			$userDetailUserRole = new UserDetailUserRole();
+			$savedUserDetailUserRole = $userDetailUserRole->create(
+				[
+					'user_detail_id' => $createdUser->id, 
+					'user_role_id' => $userDetail->id
+				]
+			);
 
-		return $this->commonFunctions->setUserDetailReturn($in->getFk(), new RegisterUserDetailsResponse());
+			$userDepartment = UserDepartment::where('department_name', $in->getDepartment())->first();
+			if($userDepartment && $savedUserDetailUserRole) {
+				$userDetailUserDepartment = new UserDetailUserDepartment();
+				$userDetailUserDepartment->create(
+					[
+						'user_detail_id' => $createdUser->id, 
+						'user_department_id' => $userDepartment->id
+					]
+				);
+			}
+			else {
+				$userDetail = UserDetail::find($createdUser->id);
+				$userDetail->delete();
+				$userDetailUserRole = UserDetailUserRole::find($savedUserDetailUserRole->id);
+				$userDetailUserRole->delete();
+			}
+		}
+		else {
+			$userDetail = UserDetail::find($createdUser->id);
+			$userDetail->delete();
+		}
+
+		$response = new RegisterUserDetailsResponse();
+		if($createdUser) {
+			return $response->setResult(true);
+		}
+		else {
+			return $response->setResult(false);
+		}
 	}
 
 }
