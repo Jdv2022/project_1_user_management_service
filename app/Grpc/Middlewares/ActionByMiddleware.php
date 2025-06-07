@@ -9,8 +9,8 @@ use App\Grpc\Services\ActionByUserService;
 // ActionByUserService is used for populating common table columns
 class ActionByMiddleware {
 
-    public function initializeActionByUser(int $id): void {
-        app()->instance(ActionByUserService::class, new ActionByUserService($id));
+    public function initializeActionByUser(int $id, string $tz = 'undefined'): void {
+        app()->instance(ActionByUserService::class, new ActionByUserService($id, $tz));
     }
 
 }

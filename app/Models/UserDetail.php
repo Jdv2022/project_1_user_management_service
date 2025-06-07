@@ -47,4 +47,8 @@ class UserDetail extends __SystemBaseModel {
 			]);	
 	}
 
+	public function userAttendance() {
+		return $this->hasMany(UserAttendance::class);
+	}
+
 }

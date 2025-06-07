@@ -26,7 +26,9 @@ class RegisterUserHandler extends ActionByMiddleware implements RegisterServiceI
 		Log::info("[Register Handler] User details id " . $in->getFk());
 
 		$id = $in->getActionByUserId();
-		$this->initializeActionByUser((int)$id);
+		$tz = $in->getTimeZone();
+
+		$this->initializeActionByUser((int)$id, $tz);
 
 		if(UserDetail::where('email', $in->getEmail())->exists()) {
 			throw new \Exception('Email details already exists');

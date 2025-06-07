@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
 
-			$table->string('type_1');
-			$table->text('description');
-			$table->string('level');
-			$table->boolean('status')->default(false);
+			$table->string('type_1')->nullable();
+			$table->text('description')->nullable();
+			$table->string('level')->nullable();
+			$table->boolean('status')->default(false)->nullable();
 
-			$table->datetime('created_at');
-            $table->string('created_at_timezone', 10)->nullable();
+            $table->datetime('created_at');
+            $table->string('created_at_timezone', 200)->nullable();
             $table->integer('created_by_user_id')->nullable();
             $table->string('created_by_username', 45)->nullable();
             $table->string('created_by_user_type', 45)->nullable();
             $table->datetime('updated_at');
-            $table->string('updated_at_timezone', 10)->nullable();
+            $table->string('updated_at_timezone', 200)->nullable();
             $table->integer('updated_by_user_id')->nullable();
             $table->string('updated_by_username', 45)->nullable();
             $table->string('updated_by_user_type', 45)->nullable();
