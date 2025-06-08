@@ -9,12 +9,14 @@ use grpc\Register\RegisterServiceInterface;
 use grpc\userRegistrationFormData\UserRegistrationFormDataServiceInterface;
 use grpc\getUsers\GetUsersServiceInterface;
 use grpc\userClockIn\UserClockInServiceInterface;
+use grpc\userClockOut\UserClockOutServiceInterface;
 use grpc\getAttendance\GetAttendanceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
 use App\Grpc\Handlers\RegistrationFormDataHandler;
 use App\Grpc\Handlers\UsersHandler;
 use App\Grpc\Handlers\UserClockInHandler;
+use App\Grpc\Handlers\UserClockOutHandler;
 use App\Grpc\Handlers\GetAttendanceHandler;
 use App\Grpc\Services\CommonFunctions;
 
@@ -31,6 +33,7 @@ $server->registerService(GetUserDetailsServiceInterface::class, new UserDetailsH
 $server->registerService(UserRegistrationFormDataServiceInterface::class, new RegistrationFormDataHandler(new CommonFunctions));
 $server->registerService(GetUsersServiceInterface::class, new UsersHandler(new CommonFunctions));
 $server->registerService(UserClockInServiceInterface::class, new UserClockInHandler(new CommonFunctions));
+$server->registerService(UserClockOutServiceInterface::class, new UserClockOutHandler(new CommonFunctions));
 $server->registerService(GetAttendanceInterface::class, new GetAttendanceHandler(new CommonFunctions));
 
 $server->serve(Worker::create());

@@ -4,7 +4,7 @@ namespace App\Grpc\Handlers;
 
 use grpc\userClockIn\UserClockInServiceInterface;
 use grpc\userClockIn\UserClockInRequest;
-use grpc\userClockIn\UserClockOutResponse;
+use grpc\userClockIn\UserClockInResponse;
 use Spiral\RoadRunner\GRPC\ContextInterface;
 use App\Models\UserAttendance;
 use App\Models\UserDetail;
@@ -20,12 +20,15 @@ class UserClockInHandler extends ActionByMiddleware implements UserClockInServic
 		$this->commonFunctions = $commonFunctions;
 	}
 
-	public function UserClockInService(ContextInterface $ctx, UserClockInRequest $in): UserClockOutResponse {
+	public function UserClockInService(ContextInterface $ctx, UserClockInRequest $in): UserClockInResponse {
 		$fk = $in->getFk();
 		$timezone = $in->getTimezone();
 		$now = Carbon::now($timezone);
 		$userInstance = UserDetail::find($fk);
-		$response = new UserClockOutResponse();
+		if(!$userInstance) {
+			throw new \Exception("User Not Found!");
+		}
+		$response = new UserClockInResponse();
 		$this->initializeActionByUser((int)$fk, $timezone);
 		Log::info("User[$fk] Clock In Timezone: " . $now->format('Y-m-d H:i:s'));
 

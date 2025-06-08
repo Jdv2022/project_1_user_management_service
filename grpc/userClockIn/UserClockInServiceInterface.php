@@ -14,9 +14,9 @@ interface UserClockInServiceInterface extends GRPC\ServiceInterface
     /**
     * @param GRPC\ContextInterface $ctx
     * @param UserClockInRequest $in
-    * @return UserClockOutResponse
+    * @return UserClockInResponse
     *
     * @throws GRPC\Exception\InvokeException
     */
-    public function UserClockInService(GRPC\ContextInterface $ctx, UserClockInRequest $in): UserClockOutResponse;
+    public function UserClockInService(GRPC\ContextInterface $ctx, UserClockInRequest $in): UserClockInResponse;
 }
