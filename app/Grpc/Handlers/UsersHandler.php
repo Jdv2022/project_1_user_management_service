@@ -20,7 +20,7 @@ class UsersHandler extends ActionByMiddleware implements GetUsersServiceInterfac
 	}
 
 	public function GetUsers(ContextInterface $ctx, GetUsersRequest $in): GetUsersResponse {
-		Log::info("[UsersHandler Handler] User details id " . $id);
+		Log::info("[UsersHandler Handler] User details id ");
 		   
 		$mainObject = UserDetail::with(['userRoles', 'userDepartments'])->get();
 		$responseObj = new GetUsersResponse();

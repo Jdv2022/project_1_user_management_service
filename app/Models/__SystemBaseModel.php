@@ -19,16 +19,32 @@ class __SystemBaseModel extends Model
         parent::boot();
 
 		// Disable this CLASS when running this commands
-		if (app()->runningInConsole()) {
-			$artisanCommandsToSkip = ['migrate', 'db:seed', 'db:wipe', 'cache:clear', 'config:cache'];
-		
-			$calledCommand = collect($_SERVER['argv'] ?? [])->implode(' ');
-		
-			foreach ($artisanCommandsToSkip as $cmd) {
-				if (str_contains($calledCommand, $cmd)) {
-					return;
-				}
-			}
+		if(app()->runningInConsole()) {
+			static::creating(function ($model) {
+				$now = Carbon::now();
+				if($model->hasColumn('created_at')) $model->created_at = $now;
+				if($model->hasColumn('created_at_timezone')) $model->created_at_timezone = '+08:00';
+				if($model->hasColumn('created_by_user_id')) $model->created_by_user_id = 1;
+				if($model->hasColumn('created_by_username')) $model->created_by_username = 'JD';
+				if($model->hasColumn('created_by_user_type')) $model->created_by_user_type = 'Admin';
+				if($model->hasColumn('updated_at')) $model->updated_at = $now;
+				if($model->hasColumn('updated_at_timezone')) $model->updated_at_timezone = '+08:00';
+				if($model->hasColumn('updated_by_user_id')) $model->updated_by_user_id = 1;
+				if($model->hasColumn('updated_by_username')) $model->updated_by_username = 'JD';
+				if($model->hasColumn('updated_by_user_type')) $model->updated_by_user_type = 'Admin';	
+
+			});
+
+			static::updating(function ($model) {
+				$now = Carbon::now();
+				if($model->hasColumn('updated_at')) $model->updated_at = $now;
+				if($model->hasColumn('updated_at_timezone')) $model->updated_at_timezone = '+08:00';
+				if($model->hasColumn('updated_by_user_id')) $model->updated_by_user_id = 1;
+				if($model->hasColumn('updated_by_username')) $model->updated_by_username = 'JD';
+				if($model->hasColumn('updated_by_user_type')) $model->updated_by_user_type = 'Admin';	
+			});
+
+			return;
 		}
 
         static::creating(function ($model) {
