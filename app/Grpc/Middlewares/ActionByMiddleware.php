@@ -10,6 +10,9 @@ use App\Grpc\Services\ActionByUserService;
 class ActionByMiddleware {
 
     public function initializeActionByUser(int $id, string $tz = 'undefined'): void {
+		if($tz === 'undefined') {
+			$tz = config('app.timezone');
+		}
         app()->instance(ActionByUserService::class, new ActionByUserService($id, $tz));
     }
 
