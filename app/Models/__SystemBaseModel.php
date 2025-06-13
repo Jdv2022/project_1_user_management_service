@@ -14,6 +14,26 @@ class __SystemBaseModel extends Model
     public function __construct(array $attributes = []) {
         parent::__construct($attributes);
     }
+
+	public static function customInsert(array $attributes = []) {
+		$now = Carbon::now();
+		foreach($attributes as &$attribute) {
+			$attribute['created_at'] = $now;
+			$attribute['created_at_timezone'] = '+08:00';
+			$attribute['created_by_user_id'] = 1;
+			$attribute['created_by_username'] = 'JD';
+			$attribute['created_by_user_type'] = 'Admin';
+			$attribute['updated_at'] = $now;
+			$attribute['updated_at_timezone'] = '+08:00';
+			$attribute['updated_by_user_id'] = 1;
+			$attribute['updated_by_username'] = 'JD';
+			$attribute['updated_by_user_type'] = 'Admin';	
+		}
+		Log::info("Custom Inserting Attributes...");
+		Log::debug($attributes);
+		parent::insert($attributes);
+	}
+
     /* Set Default Attributes */
     protected static function boot() {
         parent::boot();
@@ -32,7 +52,6 @@ class __SystemBaseModel extends Model
 				if($model->hasColumn('updated_by_user_id')) $model->updated_by_user_id = 1;
 				if($model->hasColumn('updated_by_username')) $model->updated_by_username = 'JD';
 				if($model->hasColumn('updated_by_user_type')) $model->updated_by_user_type = 'Admin';	
-
 			});
 
 			static::updating(function ($model) {
