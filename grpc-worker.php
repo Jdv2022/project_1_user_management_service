@@ -10,6 +10,7 @@ use grpc\userRegistrationFormData\UserRegistrationFormDataServiceInterface;
 use grpc\getUsers\GetUsersServiceInterface;
 use grpc\userClockIn\UserClockInServiceInterface;
 use grpc\userClockOut\UserClockOutServiceInterface;
+use grpc\TeamLists\TeamListsServiceInterface;
 use grpc\getAttendance\GetAttendanceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
@@ -18,6 +19,7 @@ use App\Grpc\Handlers\UsersHandler;
 use App\Grpc\Handlers\UserClockInHandler;
 use App\Grpc\Handlers\UserClockOutHandler;
 use App\Grpc\Handlers\GetAttendanceHandler;
+use App\Grpc\Handlers\TeamListsHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -35,5 +37,6 @@ $server->registerService(GetUsersServiceInterface::class, new UsersHandler(new C
 $server->registerService(UserClockInServiceInterface::class, new UserClockInHandler(new CommonFunctions));
 $server->registerService(UserClockOutServiceInterface::class, new UserClockOutHandler(new CommonFunctions));
 $server->registerService(GetAttendanceInterface::class, new GetAttendanceHandler(new CommonFunctions));
+$server->registerService(GetAttendanceInterface::class, new TeamListsHandler(new CommonFunctions));
 
 $server->serve(Worker::create());
