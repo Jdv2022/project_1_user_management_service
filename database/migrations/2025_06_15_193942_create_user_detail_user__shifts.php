@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_detail_user__shifts', function (Blueprint $table) {
+        Schema::create('user_detail_user_shifts', function (Blueprint $table) {
             $table->id();
 
 			$table->datetime('created_at');

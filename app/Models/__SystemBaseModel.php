@@ -17,20 +17,22 @@ class __SystemBaseModel extends Model
 
 	public static function customInsert(array $attributes = []) {
 		$now = Carbon::now();
+        $timezone = self::getUserTimezoneStat();
+        $user = self::getAuthUserStat();
+
 		foreach($attributes as &$attribute) {
 			$attribute['created_at'] = $now;
-			$attribute['created_at_timezone'] = '+08:00';
-			$attribute['created_by_user_id'] = 1;
-			$attribute['created_by_username'] = 'JD';
-			$attribute['created_by_user_type'] = 'Admin';
+			$attribute['created_at_timezone'] = $timezone;
+			$attribute['created_by_user_id'] = $user['id'];
+			$attribute['created_by_username'] = $user['created_by_username'];
+			$attribute['created_by_user_type'] = $user['created_by_user_type'];
 			$attribute['updated_at'] = $now;
-			$attribute['updated_at_timezone'] = '+08:00';
-			$attribute['updated_by_user_id'] = 1;
-			$attribute['updated_by_username'] = 'JD';
-			$attribute['updated_by_user_type'] = 'Admin';	
+			$attribute['updated_at_timezone'] = $timezone;
+			$attribute['updated_by_user_id'] = $user['id'];
+			$attribute['updated_by_username'] = $user['updated_by_username'];
+			$attribute['updated_by_user_type'] = $user['updated_by_user_type'];	
 		}
 		Log::info("Custom Inserting Attributes...");
-		Log::debug($attributes);
 		parent::insert($attributes);
 	}
 
@@ -81,6 +83,14 @@ class __SystemBaseModel extends Model
     }
 
 	private function getUserTimezone():string {
+        return app(ActionByUserService::class)->getUserTimeZone();
+    }
+
+	private static function getAuthUserStat():array {
+        return app(ActionByUserService::class)->authUser();
+    }
+
+	private static function getUserTimezoneStat():string {
         return app(ActionByUserService::class)->getUserTimeZone();
     }
 

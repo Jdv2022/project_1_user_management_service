@@ -35,15 +35,19 @@ class AssignUserToTeamHandler extends ActionByMiddleware {
 		}
 		$chunkUserFks = array_chunk($arrToBeSaved, $howManyPerchunks);
 
-		DB::transaction(function () use($chunkUserFks) {
-			foreach($chunkUserFks as $chunkUserFk) {
-				UserDetailUserTeam::customInsert($chunkUserFk);
-			}
-		});
-
-		Log::info("Users assigned to team!");
-		$response = new AssignUserToTeamResponse();
-		return $response->setResult(true);
+		try {
+			DB::transaction(function () use($chunkUserFks) {
+				foreach($chunkUserFks as $chunkUserFk) {
+					UserDetailUserTeam::customInsert($chunkUserFk);
+				}
+			});
+			Log::info("Users assigned to team!");
+			$response = new AssignUserToTeamResponse();
+			return $response->setResult(true);
+		} 
+		catch (\Throwable $e) {
+			return $response->setResult(false);
+		}
 	}
 
 }

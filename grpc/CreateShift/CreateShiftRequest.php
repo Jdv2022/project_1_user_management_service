@@ -21,6 +21,10 @@ class CreateShiftRequest extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string description = 2;</code>
      */
     protected $description = '';
+    /**
+     * Generated from protobuf field <code>string time_zone = 3;</code>
+     */
+    protected $time_zone = '';
 
     /**
      * Constructor.
@@ -30,6 +34,7 @@ class CreateShiftRequest extends \Google\Protobuf\Internal\Message
      *
      *     @type string $shift_name
      *     @type string $description
+     *     @type string $time_zone
      * }
      */
     public function __construct($data = NULL) {
@@ -77,6 +82,28 @@ class CreateShiftRequest extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->description = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string time_zone = 3;</code>
+     * @return string
+     */
+    public function getTimeZone()
+    {
+        return $this->time_zone;
+    }
+
+    /**
+     * Generated from protobuf field <code>string time_zone = 3;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setTimeZone($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->time_zone = $var;
 
         return $this;
     }

@@ -13,6 +13,7 @@ use grpc\userClockOut\UserClockOutServiceInterface;
 use grpc\TeamLists\TeamListsServiceInterface;
 use grpc\getAttendance\GetAttendanceInterface;
 use grpc\CreateShift\CreateShiftInterface;
+use grpc\AssignUserShift\AssignUserShiftServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
 use App\Grpc\Handlers\RegistrationFormDataHandler;
@@ -22,6 +23,7 @@ use App\Grpc\Handlers\UserClockOutHandler;
 use App\Grpc\Handlers\GetAttendanceHandler;
 use App\Grpc\Handlers\TeamListsHandler;
 use App\Grpc\Handlers\CreateShiftHandler;
+use App\Grpc\Handlers\AssignUserShiftHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -41,5 +43,6 @@ $server->registerService(UserClockOutServiceInterface::class, new UserClockOutHa
 $server->registerService(GetAttendanceInterface::class, new GetAttendanceHandler(new CommonFunctions));
 $server->registerService(GetAttendanceInterface::class, new TeamListsHandler(new CommonFunctions));
 $server->registerService(CreateShiftInterface::class, new CreateShiftHandler(new CommonFunctions));
+$server->registerService(AssignUserShiftServiceInterface::class, new AssignUserShiftHandler(new CommonFunctions));
 
 $server->serve(Worker::create());
