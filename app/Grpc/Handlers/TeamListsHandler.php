@@ -8,18 +8,19 @@ use App\Grpc\Services\CommonFunctions;
 use grpc\TeamLists\TeamListsRequest;
 use grpc\TeamLists\TeamListsResponse;
 use grpc\TeamLists\teamLists;
+use grpc\TeamLists\TeamListsServiceInterface;
 use App\Models\UserTeam;
 use Illuminate\Support\Facades\DB;
 use Log;
 
-class TeamListsHandler extends ActionByMiddleware {
+class TeamListsHandler extends ActionByMiddleware implements TeamListsServiceInterface {
 
 	public function __construct(CommonFunctions $commonFunctions) {
 		$this->commonFunctions = $commonFunctions;
 	}
 
-	public function GetTeamLists(ContextInterface $ctx, TeamListsRequest $in): TeamListsResponse {
-		Log::info("GetTeamLists running...");
+	public function TeamLists(ContextInterface $ctx, TeamListsRequest $in): TeamListsResponse {
+		Log::info("TeamLists running...");
 
 		$response = new TeamListsResponse();
 

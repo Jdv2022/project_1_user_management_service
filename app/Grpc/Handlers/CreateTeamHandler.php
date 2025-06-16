@@ -22,8 +22,9 @@ class CreateTeamHandler extends ActionByMiddleware {
 		$actionByUserId = $in->getActionByUserId();
 		$teamName = $in->getTeamName();
 		$description = $in->getDescription();
+		$tz = $in->getTimezone();
 
-		$this->initializeActionByUser((int)$actionByUserId);
+		$this->initializeActionByUser((int)$actionByUserId, $tz);
 
 		$team = new UserTeam();
 		$result = $team->create([

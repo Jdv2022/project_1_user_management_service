@@ -20,6 +20,23 @@ class __SystemBaseModel extends Model
         $timezone = self::getUserTimezoneStat();
         $user = self::getAuthUserStat();
 
+		if(!isset($attributes[0])) {
+			Log::info("Each attribute must be an array. Got: " . gettype($attributes));
+			$now = Carbon::now();
+			$attributes['created_at'] = $now->toDateTimeString(); 
+			$attributes['created_at_timezone'] = '+08:00';
+			$attributes['created_by_user_id'] = 1;
+			$attributes['created_by_username'] = 'initial_creation';
+			$attributes['created_by_user_type'] = 'initial_creation';
+			$attributes['updated_at'] = $now->toDateTimeString();
+			$attributes['updated_at_timezone'] = '+08:00';
+			$attributes['updated_by_user_id'] = 1;
+			$attributes['updated_by_username'] = 'initial_creation';
+			$attributes['updated_by_user_type'] = 'initial_creation';	
+			parent::insert($attributes);
+			return;
+		}
+
 		foreach($attributes as &$attribute) {
 			$attribute['created_at'] = $now;
 			$attribute['created_at_timezone'] = $timezone;
@@ -47,13 +64,13 @@ class __SystemBaseModel extends Model
 				if($model->hasColumn('created_at')) $model->created_at = $now;
 				if($model->hasColumn('created_at_timezone')) $model->created_at_timezone = '+08:00';
 				if($model->hasColumn('created_by_user_id')) $model->created_by_user_id = 1;
-				if($model->hasColumn('created_by_username')) $model->created_by_username = 'JD';
-				if($model->hasColumn('created_by_user_type')) $model->created_by_user_type = 'Admin';
+				if($model->hasColumn('created_by_username')) $model->created_by_username = 'app_console';
+				if($model->hasColumn('created_by_user_type')) $model->created_by_user_type = 'app_console';
 				if($model->hasColumn('updated_at')) $model->updated_at = $now;
 				if($model->hasColumn('updated_at_timezone')) $model->updated_at_timezone = '+08:00';
 				if($model->hasColumn('updated_by_user_id')) $model->updated_by_user_id = 1;
-				if($model->hasColumn('updated_by_username')) $model->updated_by_username = 'JD';
-				if($model->hasColumn('updated_by_user_type')) $model->updated_by_user_type = 'Admin';	
+				if($model->hasColumn('updated_by_username')) $model->updated_by_username = 'app_console';
+				if($model->hasColumn('updated_by_user_type')) $model->updated_by_user_type = 'app_console';	
 			});
 
 			static::updating(function ($model) {

@@ -9,7 +9,7 @@ use App\Grpc\Services\ActionByUserService;
 // ActionByUserService is used for populating common table columns
 class ActionByMiddleware {
 
-    public function initializeActionByUser(int $id, string $tz = 'undefined'): void {
+    public function initializeActionByUser(int $id, string $tz): void {
 		if($tz === 'undefined') {
 			$tz = config('app.timezone');
 		}

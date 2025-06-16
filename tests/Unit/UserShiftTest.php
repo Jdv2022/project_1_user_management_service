@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Grpc\Services\CommonFunctions;
 use App\Grpc\Middlewares\ActionByMiddleware;
 use Illuminate\Foundation\Testing\RefreshDatabase; 
+use App\Models\UserShift;
 use Log;
 
 class UserShiftTest extends TestCase {
@@ -29,11 +30,13 @@ class UserShiftTest extends TestCase {
 		Log::info("test_create_user_shift START");
 
 		$commonFunctions = new CommonFunctions();
-		$ctx = $this->getMockBuilder(ContextInterface::class)->getMock();
+		$ctx = $this->createMock(ContextInterface::class);
 
 		$in = new CreateShiftRequest();
 		$in->setShiftName("Test Shift");
 		$in->setDescription("Test Shift Description");
+		$in->setTimezone("TEST");
+		$in->setActionByUserId(1);
 
 		$createShiftHandler = new CreateShiftHandler($commonFunctions);
 
@@ -41,6 +44,9 @@ class UserShiftTest extends TestCase {
 
 		$this->assertInstanceOf(CreateShiftResponse::class, $result);
 		$this->assertTrue($result->getResult());
+		$res = UserShift::first();
+		$this->assertEquals("Test Shift", $res->shift_name);
+		$this->assertEquals("Test Shift Description", $res->description);
     }
 
 }

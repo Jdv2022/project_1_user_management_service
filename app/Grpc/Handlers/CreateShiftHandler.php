@@ -7,10 +7,11 @@ use Spiral\RoadRunner\GRPC\ContextInterface;
 use App\Grpc\Services\CommonFunctions;
 use grpc\CreateShift\CreateShiftResponse;
 use grpc\CreateShift\CreateShiftRequest;
+use grpc\CreateShift\CreateShiftServiceInterface;
 use App\Models\UserShift;
 use Log;
 
-class CreateShiftHandler extends ActionByMiddleware {
+class CreateShiftHandler extends ActionByMiddleware implements CreateShiftServiceInterface {
 
 	public function __construct(CommonFunctions $commonFunctions) {
 		$this->commonFunctions = $commonFunctions;
@@ -18,6 +19,8 @@ class CreateShiftHandler extends ActionByMiddleware {
 
 	public function CreateShift(ContextInterface $ctx, CreateShiftRequest $in): CreateShiftResponse {
 		Log::info("CreateTeamHandler running...");
+
+		$this->initializeActionByUser((int)$in->getActionByUserId(), $in->getTimezone());
 
 		$stats = UserShift::create([
 			'shift_name' => $in->getShiftName(),

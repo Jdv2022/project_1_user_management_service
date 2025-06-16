@@ -29,7 +29,7 @@ class TeamListsHandlerTest extends TestCase {
 		$teamListsHandler = new TeamListsHandler(new CommonFunctions());
 		$in = new TeamListsRequest();
 		$ctx = $this->createMock(ContextInterface::class);
-		$result = $teamListsHandler->GetTeamLists($ctx, $in);
+		$result = $teamListsHandler->TeamLists($ctx, $in);
 
 		$this->assertInstanceOf(TeamListsResponse::class, $result);
 		$payload = $result->getTeamLists();

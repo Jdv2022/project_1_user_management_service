@@ -12,7 +12,7 @@ use App\Models\UserDetailUserShift;
 use Illuminate\Support\Facades\DB;
 use Log;
 
-class AssignUserShiftHandler extends ActionByMiddleware {
+class AssignUserShiftHandler extends ActionByMiddleware implements AssignUserShiftServiceInterface {
 
 	public function __construct(CommonFunctions $commonFunctions) {
 		$this->commonFunctions = $commonFunctions;
@@ -40,9 +40,8 @@ class AssignUserShiftHandler extends ActionByMiddleware {
 		$chunkUserFks = array_chunk($arrToBeSaved, $howManyPerchunks);
 
 		try {
-			$res = DB::transaction(function () use($chunkUserFks) {
+			DB::transaction(function () use($chunkUserFks) {
 				foreach($chunkUserFks as $chunkUserFk) {
-					Log::debug($chunkUserFk);
 					UserDetailUserShift::customInsert($chunkUserFk);
 				}
 			});

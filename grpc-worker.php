@@ -12,7 +12,7 @@ use grpc\userClockIn\UserClockInServiceInterface;
 use grpc\userClockOut\UserClockOutServiceInterface;
 use grpc\TeamLists\TeamListsServiceInterface;
 use grpc\getAttendance\GetAttendanceInterface;
-use grpc\CreateShift\CreateShiftInterface;
+use grpc\CreateShift\CreateShiftServiceInterface;
 use grpc\AssignUserShift\AssignUserShiftServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
@@ -41,8 +41,8 @@ $server->registerService(GetUsersServiceInterface::class, new UsersHandler(new C
 $server->registerService(UserClockInServiceInterface::class, new UserClockInHandler(new CommonFunctions));
 $server->registerService(UserClockOutServiceInterface::class, new UserClockOutHandler(new CommonFunctions));
 $server->registerService(GetAttendanceInterface::class, new GetAttendanceHandler(new CommonFunctions));
-$server->registerService(GetAttendanceInterface::class, new TeamListsHandler(new CommonFunctions));
-$server->registerService(CreateShiftInterface::class, new CreateShiftHandler(new CommonFunctions));
+$server->registerService(TeamListsServiceInterface::class, new TeamListsHandler(new CommonFunctions));
+$server->registerService(CreateShiftServiceInterface::class, new CreateShiftHandler(new CommonFunctions));
 $server->registerService(AssignUserShiftServiceInterface::class, new AssignUserShiftHandler(new CommonFunctions));
 
 $server->serve(Worker::create());

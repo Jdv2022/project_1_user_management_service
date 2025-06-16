@@ -24,7 +24,9 @@ class AssignUserToTeamHandler extends ActionByMiddleware {
 		$actionByUserId = $in->getActionByUserId();
 		$userFks = $in->getFk();
 		$teamId = $in->getTeamId();
-		$this->initializeActionByUser((int)$actionByUserId);
+		$tz = $in->getTimezone();
+		
+		$this->initializeActionByUser((int)$actionByUserId, $tz);
 
 		$arrToBeSaved = [];
 		foreach($userFks as $userFk) {

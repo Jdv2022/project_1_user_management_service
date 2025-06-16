@@ -22,9 +22,13 @@ class CreateShiftRequest extends \Google\Protobuf\Internal\Message
      */
     protected $description = '';
     /**
-     * Generated from protobuf field <code>string time_zone = 3;</code>
+     * Generated from protobuf field <code>string timezone = 3;</code>
      */
-    protected $time_zone = '';
+    protected $timezone = '';
+    /**
+     * Generated from protobuf field <code>int64 action_by_user_id = 4;</code>
+     */
+    protected $action_by_user_id = 0;
 
     /**
      * Constructor.
@@ -34,7 +38,8 @@ class CreateShiftRequest extends \Google\Protobuf\Internal\Message
      *
      *     @type string $shift_name
      *     @type string $description
-     *     @type string $time_zone
+     *     @type string $timezone
+     *     @type int|string $action_by_user_id
      * }
      */
     public function __construct($data = NULL) {
@@ -87,23 +92,45 @@ class CreateShiftRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string time_zone = 3;</code>
+     * Generated from protobuf field <code>string timezone = 3;</code>
      * @return string
      */
-    public function getTimeZone()
+    public function getTimezone()
     {
-        return $this->time_zone;
+        return $this->timezone;
     }
 
     /**
-     * Generated from protobuf field <code>string time_zone = 3;</code>
+     * Generated from protobuf field <code>string timezone = 3;</code>
      * @param string $var
      * @return $this
      */
-    public function setTimeZone($var)
+    public function setTimezone($var)
     {
         GPBUtil::checkString($var, True);
-        $this->time_zone = $var;
+        $this->timezone = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int64 action_by_user_id = 4;</code>
+     * @return int|string
+     */
+    public function getActionByUserId()
+    {
+        return $this->action_by_user_id;
+    }
+
+    /**
+     * Generated from protobuf field <code>int64 action_by_user_id = 4;</code>
+     * @param int|string $var
+     * @return $this
+     */
+    public function setActionByUserId($var)
+    {
+        GPBUtil::checkInt64($var);
+        $this->action_by_user_id = $var;
 
         return $this;
     }
