@@ -58,7 +58,7 @@ class __SystemBaseModel extends Model
         parent::boot();
 
 		// Disable this CLASS when running this commands
-		if(app()->runningInConsole()) {
+		if(app()->runningInConsole() && !app()->runningUnitTests()) {
 			static::creating(function ($model) {
 				$now = Carbon::now();
 				if($model->hasColumn('created_at')) $model->created_at = $now;

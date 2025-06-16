@@ -20,14 +20,23 @@ use Log;
 class AssignUserShiftTest extends TestCase {
 	use RefreshDatabase;
 
+	private $shift_name = "TEST SHIFT";
+	private $description = "TEST DESCRIPTION";
+	private $tz = "TEST";
+	private $action_by_user_id = 1;
+	private $user_detail_id = 1;
+	private $user_shift_id = 1;
+
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database AssignUserShiftTest [start]");
+		$init = new ActionByMiddleware();
+		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');
 		$this->artisan('db:seed');
 		UserShift::create([
-			'shift_name' => 'Test shift',
-			'description' => 'This is test for shifts.'
+			'shift_name' => $this->shift_name,
+			'description' => $this->description
 		]);
 		Log::info("Migrating Database AssignUserShiftTest [end]");
 	}
@@ -37,8 +46,8 @@ class AssignUserShiftTest extends TestCase {
 
 		$in = new AssignUserShiftRequest();
 		$in->setActionByUserId(1);
-		$in->setUserIds([1]);
-		$in->setShiftId(1);
+		$in->setUserIds([$this->user_detail_id]);
+		$in->setShiftId($this->user_shift_id);
 		$in->setTimezone("TEST");
 
 		$ctx = $this->createMock(ContextInterface::class);
@@ -48,6 +57,12 @@ class AssignUserShiftTest extends TestCase {
 		$res = UserDetailUserShift::first();
 		$this->assertTrue($response->getResult());
 		$this->assertNotNull($res);
+		$this->assertEquals($this->action_by_user_id, $res->created_by_user_id);
+		$this->assertEquals($this->tz, $res->created_at_timezone);
+		$this->assertEquals($this->action_by_user_id, $res->updated_by_user_id);
+		$this->assertEquals($this->tz, $res->updated_at_timezone);
+		$this->assertEquals($this->user_detail_id, $res->user_detail_id);
+		$this->assertEquals($this->user_shift_id, $res->user_shift_id);
 	}
 
 }

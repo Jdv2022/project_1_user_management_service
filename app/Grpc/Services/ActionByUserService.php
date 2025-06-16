@@ -11,7 +11,7 @@ class ActionByUserService {
 	protected array $user;
 	protected string $user_timezone;
 
-    public function __construct(int $id, string $user_timezone = 'undefined') {
+    public function __construct(int $id, string $user_timezone) {
         $this->id = $id;
         $this->user_timezone = $user_timezone;
 		$key = 'user_' . $id;

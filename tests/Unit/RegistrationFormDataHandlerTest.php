@@ -9,14 +9,20 @@ use App\Grpc\Handlers\RegistrationFormDataHandler;
 use grpc\userRegistrationFormData\UserRegistrationFormDataRequest;
 use grpc\userRegistrationFormData\UserRegistrationFormDataResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase; 
+use App\Grpc\Middlewares\ActionByMiddleware;
 use Log;
 
 class RegistrationFormDataHandlerTest extends TestCase {
 	use RefreshDatabase;
+	
+	private $action_by_user_id = 1;
+	private $tz = "TEST";
     
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database START");
+		$init = new ActionByMiddleware();
+		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');
 		$this->artisan('db:seed');
 		Log::info("Migrating Database END");

@@ -13,14 +13,20 @@ use Spiral\RoadRunner\GRPC\ContextInterface;
 use App\Grpc\Services\CommonFunctions;
 use Illuminate\Foundation\Testing\RefreshDatabase; 
 use App\Models\UserAttendance;
+use App\Grpc\Middlewares\ActionByMiddleware;
 use Log;
 
 class UserClockInHandlerTest extends TestCase {
 	use RefreshDatabase;
 
+	private $action_by_user_id = 1;
+	private $tz = "TEST";
+
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database START");
+		$init = new ActionByMiddleware();
+		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');
 		$this->artisan('db:seed');
 		Log::info("Migrating Database END");

@@ -16,9 +16,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class GetAttendancehandlerTest extends TestCase {
 	use RefreshDatabase;
 
+	private $tz = "TEST";
+	private $action_by_user_id = 1;
+
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database START");
+		$init = new ActionByMiddleware();
+		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');
 		$this->artisan('db:seed');
 		Log::info("Migrating Database END");

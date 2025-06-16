@@ -51,6 +51,7 @@ class RegisterUserHandler extends ActionByMiddleware implements RegisterServiceI
 		$actionByUser = Redis::get($id);	
 		$userDetail = new UserDetail();
 		$createdUser = $userDetail->create($data);
+
 		$userDetail = UserRole::where('type_1', $in->getPosition())->first();
 		if($userDetail && $createdUser) {
 			$userDetailUserRole = new UserDetailUserRole();
@@ -62,6 +63,8 @@ class RegisterUserHandler extends ActionByMiddleware implements RegisterServiceI
 			);
 
 			$userDepartment = UserDepartment::where('department_name', $in->getDepartment())->first();
+			Log::debug(UserDepartment::all());
+			
 			if($userDepartment && $savedUserDetailUserRole) {
 				$userDetailUserDepartment = new UserDetailUserDepartment();
 				$userDetailUserDepartment->create(
@@ -76,18 +79,22 @@ class RegisterUserHandler extends ActionByMiddleware implements RegisterServiceI
 				$userDetail->delete();
 				$userDetailUserRole = UserDetailUserRole::find($savedUserDetailUserRole->id);
 				$userDetailUserRole->delete();
+				Log::error("[Register Handler] UserDetailUserRole not created");
 			}
 		}
 		else {
 			$userDetail = UserDetail::find($createdUser->id);
 			$userDetail->delete();
+			Log::error("[Register Handler] UserDetail not created");
 		}
 
 		$response = new RegisterUserDetailsResponse();
 		if($createdUser) {
+			Log::info("[Register Handler] User details created");
 			return $response->setResult(true);
 		}
 		else {
+			Log::info("[Register Handler] User details not created");
 			return $response->setResult(false);
 		}
 	}
