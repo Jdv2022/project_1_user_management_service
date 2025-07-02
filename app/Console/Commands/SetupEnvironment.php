@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\User;
+use App\Models\UserDetail;
+use App\Models\UserRole;
+use App\Models\UserDetailUserRole;
 
 class SetupEnvironment extends Command
 {
@@ -30,12 +32,26 @@ class SetupEnvironment extends Command
 
 	private function populateInitUser() {
 		$this->info("Populating initial user...");
-		if(User::exists()) {
-			User::factory(1)->create();
-			$this->info("Initial user populated!");
+		if(UserDetail::exists()) {
+			UserDetail::factory(1)->create();
+			$this->info("Initial UserDetail populated!");
 		}
 		else {
-			$this->info("Initial user already exist!");
+			$this->info("Initial UserDetail already exist!");
+		}
+		if(UserRole::exists()) {
+			UserRole::factory(1)->create();
+			$this->info("Initial UserRole populated!");
+		}
+		else {
+			$this->info("Initial UserRole already exist!");
+		}
+		if(UserDetailUserRole::exists()) {
+			UserDetailUserRole::factory(1)->create();
+			$this->info("Initial UserDetailUserRole populated!");
+		}
+		else {
+			$this->info("Initial UserDetailUserRole already exist!");
 		}
 	}
 }

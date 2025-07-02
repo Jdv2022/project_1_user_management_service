@@ -1,0 +1,14 @@
+version: "3"
+
+server:
+  command: "php grpc-worker.php"
+
+grpc:
+  listen: "tcp://0.0.0.0:9001"
+
+  proto:
+    - "protos_project_1/ums/*.proto"
+
+  pool: 
+    command: "php grpc-worker.php"  
+    numWorkers: 2  

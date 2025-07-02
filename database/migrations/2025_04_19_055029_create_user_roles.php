@@ -14,21 +14,21 @@ return new class extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
 
-			$table->string('name');
-			$table->string('description');
-			$table->string('level');
-			$table->boolean('status')->default(false);
+			$table->string('type_1')->nullable();
+			$table->text('description')->nullable();
+			$table->string('level')->nullable();
+			$table->boolean('status')->default(false)->nullable();
 
-			$table->datetime('created_at');
-            $table->string('created_at_timezone', 10)->nullable();
-            $table->integer('created_by_user_id')->nullable();
-            $table->string('created_by_username', 45)->nullable();
-            $table->string('created_by_user_type', 45)->nullable();
+            $table->datetime('created_at');
+            $table->string('created_at_timezone', 200);
+            $table->integer('created_by_user_id');
+            $table->string('created_by_username', 45);
+            $table->string('created_by_user_type', 45);
             $table->datetime('updated_at');
-            $table->string('updated_at_timezone', 10)->nullable();
-            $table->integer('updated_by_user_id')->nullable();
-            $table->string('updated_by_username', 45)->nullable();
-            $table->string('updated_by_user_type', 45)->nullable();
+            $table->string('updated_at_timezone', 200);
+            $table->integer('updated_by_user_id');
+            $table->string('updated_by_username', 45);
+            $table->string('updated_by_user_type', 45);
             $table->boolean('enabled')->default(true);
         });
     }
