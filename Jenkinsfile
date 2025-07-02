@@ -40,44 +40,44 @@ pipeline {
                 
                         // Upload .env files
                         sh """
-                            scp -o StrictHostKeyChecking=no \$ENV_PROD_TEST jd@212.85.25.94:/var/www/html/sunset/ums/.env
-                            scp -o StrictHostKeyChecking=no \$ENV_PROD_TESTING jd@212.85.25.94:/var/www/html/sunset/ums/.env.testing
+                            scp -o StrictHostKeyChecking=no \$ENV_PROD_TEST jd@212.85.25.94:/var/www/html/sunset/ums-test/.env
+                            scp -o StrictHostKeyChecking=no \$ENV_PROD_TESTING jd@212.85.25.94:/var/www/html/sunset/ums-test/.env.testing
                         
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                sudo chmod 644 /var/www/html/sunset/ums/.env &&
-                                sudo chmod 644 /var/www/html/sunset/ums/.env.testing
+                                sudo chmod 644 /var/www/html/sunset/ums-test/.env &&
+                                sudo chmod 644 /var/www/html/sunset/ums-test/.env.testing
                             '
                         """
                         
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums &&
+                                cd /var/www/html/sunset/ums-test &&
                                 composer install
                             '
                         """
                     
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                sudo chown -R jd:www-data /var/www/html/sunset/ums &&
-                                sudo chmod -R 755 /var/www/html/sunset/ums
+                                sudo chown -R jd:www-data /var/www/html/sunset/ums-test &&
+                                sudo chmod -R 755 /var/www/html/sunset/ums-test
                             '
                         """
                         
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums &&
+                                cd /var/www/html/sunset/ums-test &&
                                 docker compose up -d
                             '
                         """
 						sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums &&
+                                cd /var/www/html/sunset/ums-test &&
                                 docker compose exec app ./vendor/bin/phpunit
                             '
                         """
 						sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums &&
+                                cd /var/www/html/sunset/ums-test &&
                                 docker compose down &&
         						docker network prune -f
                             '
