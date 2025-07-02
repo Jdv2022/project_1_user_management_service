@@ -21,9 +21,9 @@ services:
       context: .
     image: ${APP_NAME}
     restart: unless-stopped
-    working_dir: /var/www/sunset/user_management_service
+    working_dir: /var/www/html/sunset/user_management_service
     volumes:
-      - .:/var/www/sunset/user_management_service
+      - .:/var/www/html/sunset/user_management_service
     depends_on:
       - mysql
     environment:
