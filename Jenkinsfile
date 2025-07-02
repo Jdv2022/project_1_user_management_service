@@ -3,8 +3,8 @@ pipeline {
     
     environment {
         DEPLOY_SERVER = 'jd@212.85.25.94'
-        DEPLOY_PATH   = '/var/www/html/sunset/ums'
-        DEPLOY_PATH_TEST = '/var/www/html/sunset/ums-test'
+        DEPLOY_PATH   = '/var/www/html/sunset/user_management_service'
+        DEPLOY_PATH_TEST = '/var/www/html/sunset/user_management_service_test'
         SSH_CRED      = '7f5db0fc-1f49-44d1-827b-9f8fbee846ea'
     }
 
@@ -19,15 +19,15 @@ pipeline {
                         // Set permissions
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                sudo chown -R jd:www-data /var/www/html/sunset/ums-test &&
-                                sudo chmod -R 755 /var/www/html/sunset/ums-test
+                                sudo chown -R jd:www-data /var/www/html/sunset/user_management_service_test &&
+                                sudo chmod -R 755 /var/www/html/sunset/user_management_service_test
                             '
                         """
                         
                         // Git pull with prune
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums-test &&
+                                cd /var/www/html/sunset/user_management_service_test &&
                                 if [ ! -d ".git" ]; then
                                     git clone https://github.com/Jdv2022/project_1_user_management_service . 
                                 else
@@ -40,44 +40,44 @@ pipeline {
                 
                         // Upload .env files
                         sh """
-                            scp -o StrictHostKeyChecking=no \$ENV_PROD_TEST jd@212.85.25.94:/var/www/html/sunset/ums-test/.env
-                            scp -o StrictHostKeyChecking=no \$ENV_PROD_TESTING jd@212.85.25.94:/var/www/html/sunset/ums-test/.env.testing
+                            scp -o StrictHostKeyChecking=no \$ENV_PROD_TEST jd@212.85.25.94:/var/www/html/sunset/user_management_service_test/.env
+                            scp -o StrictHostKeyChecking=no \$ENV_PROD_TESTING jd@212.85.25.94:/var/www/html/sunset/user_management_service_test/.env.testing
                         
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                sudo chmod 644 /var/www/html/sunset/ums-test/.env &&
-                                sudo chmod 644 /var/www/html/sunset/ums-test/.env.testing
+                                sudo chmod 644 /var/www/html/sunset/user_management_service_test/.env &&
+                                sudo chmod 644 /var/www/html/sunset/user_management_service_test/.env.testing
                             '
                         """
                         
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums-test &&
+                                cd /var/www/html/sunset/user_management_service_test &&
                                 composer install
                             '
                         """
                     
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                sudo chown -R jd:www-data /var/www/html/sunset/ums-test &&
-                                sudo chmod -R 755 /var/www/html/sunset/ums-test
+                                sudo chown -R jd:www-data /var/www/html/sunset/user_management_service_test &&
+                                sudo chmod -R 755 /var/www/html/sunset/user_management_service_test
                             '
                         """
                         
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums-test &&
+                                cd /var/www/html/sunset/user_management_service_test &&
                                 docker compose up -d
                             '
                         """
 						sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums-test &&
+                                cd /var/www/html/sunset/user_management_service_test &&
                                 docker compose exec app ./vendor/bin/phpunit
                             '
                         """
 						sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums-test &&
+                                cd /var/www/html/sunset/user_management_service_test &&
                                 docker compose down &&
         						docker network prune -f
                             '
@@ -95,15 +95,15 @@ pipeline {
                         // Set permissions
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                sudo chown -R jd:www-data /var/www/html/sunset/ums &&
-                                sudo chmod -R 755 /var/www/html/sunset/ums
+                                sudo chown -R jd:www-data /var/www/html/sunset/user_management_service &&
+                                sudo chmod -R 755 /var/www/html/sunset/user_management_service
                             '
                         """
                         
                         // Git pull with prune
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums &&
+                                cd /var/www/html/sunset/user_management_service &&
                                 if [ ! -d ".git" ]; then
                                     git clone https://github.com/Jdv2022/project_1_user_management_service . 
                                 else
@@ -116,30 +116,30 @@ pipeline {
                 
                         // Upload .env files
                         sh """
-                            scp -o StrictHostKeyChecking=no \$ENV_FILE jd@212.85.25.94:/var/www/html/sunset/ums/.env
+                            scp -o StrictHostKeyChecking=no \$ENV_FILE jd@212.85.25.94:/var/www/html/sunset/user_management_service/.env
                         
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                sudo chmod 644 /var/www/html/sunset/ums/.env
+                                sudo chmod 644 /var/www/html/sunset/user_management_service/.env
                             '
                         """
                         
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums &&
+                                cd /var/www/html/sunset/user_management_service &&
                                 composer install
                             '
                         """
                     
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                sudo chown -R jd:www-data /var/www/html/sunset/ums &&
-                                sudo chmod -R 755 /var/www/html/sunset/ums
+                                sudo chown -R jd:www-data /var/www/html/sunset/user_management_service &&
+                                sudo chmod -R 755 /var/www/html/sunset/user_management_service
                             '
                         """
                         
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/ums &&
+                                cd /var/www/html/sunset/user_management_service &&
                                 docker compose up -d
                             '
                         """
