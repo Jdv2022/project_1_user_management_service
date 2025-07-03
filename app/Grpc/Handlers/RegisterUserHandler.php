@@ -48,7 +48,7 @@ class RegisterUserHandler extends ActionByMiddleware implements RegisterServiceI
 			'profile_image_name' => $in->getSetProfileImageName(),
 		];
 
-		$actionByUser = Redis::get($id);	
+		$actionByUser = Redis::get('user_' . $id);	
 		$userDetail = new UserDetail();
 		$createdUser = $userDetail->create($data);
 

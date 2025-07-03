@@ -30,6 +30,16 @@ class AssignUserShiftTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database AssignUserShiftTest [start]");
+		$userId = 1;
+        $redisKey = 'user_' . $userId;
+
+        $userDataArray = json_decode(file_get_contents(base_path('tests/Fixtures/user.json')), true);
+        $userJson = json_encode($userDataArray);
+
+        Redis::shouldReceive('get')
+            ->times(2)
+            ->with($redisKey)
+            ->andReturn($userJson);
 		$init = new ActionByMiddleware();
 		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');

@@ -11,6 +11,7 @@ use App\Grpc\Handlers\CreateTeamHandler;
 use App\Grpc\Services\CommonFunctions;
 use Spiral\RoadRunner\GRPC\ContextInterface;
 use Log;
+use Illuminate\Support\Facades\Redis;
 
 class CreateTeamHandlerTest extends TestCase {
 	use RefreshDatabase;
@@ -24,6 +25,17 @@ class CreateTeamHandlerTest extends TestCase {
 
     public function test_create_team(): void {
 		Log::info("CreateTeamHandlerTest running...");
+
+		$userId = 1;
+        $redisKey = 'user_' . $userId;
+
+        $userDataArray = json_decode(file_get_contents(base_path('tests/Fixtures/user.json')), true);
+        $userJson = json_encode($userDataArray);
+
+        Redis::shouldReceive('get')
+            ->once()
+            ->with($redisKey)
+            ->andReturn($userJson);
 
 		$in = new CreateTeamRequest();
 		$in->setActionByUserId(1);
