@@ -11,7 +11,7 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
     ports:
-      - "3308:3306"
+      - "3007:3306"
     networks:
       - network
 
@@ -38,7 +38,7 @@ services:
     environment:
       - DB_HOST=mysql
     ports:
-      - "9001:9001"
+      - "8001:9001"
     networks:
       - network
       - grpc_network
