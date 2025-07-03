@@ -15,6 +15,7 @@ use App\Grpc\Middlewares\ActionByMiddleware;
 use App\Models\UserTeam;
 use App\Models\UserDetailUserTeam;
 use Log;
+use Illuminate\Support\Facades\Redis;
 
 class GetTeamUsersListTest extends TestCase {
 	use RefreshDatabase;
@@ -32,6 +33,16 @@ class GetTeamUsersListTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database");
+		$userId = 1;
+        $redisKey = 'user_' . $userId;
+
+        $userDataArray = json_decode(file_get_contents(base_path('tests/Fixtures/user.json')), true);
+        $userJson = json_encode($userDataArray);
+
+        Redis::shouldReceive('get')
+            ->once()
+            ->with($redisKey)
+            ->andReturn($userJson);
 		$this->team_lists = new teamUsersLists([
 			'id' => 1,
 			'first_name' => 'TEST FIRST NAME',

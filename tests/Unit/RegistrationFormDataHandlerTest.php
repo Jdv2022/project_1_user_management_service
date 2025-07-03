@@ -11,6 +11,7 @@ use grpc\userRegistrationFormData\UserRegistrationFormDataResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase; 
 use App\Grpc\Middlewares\ActionByMiddleware;
 use Log;
+use Illuminate\Support\Facades\Redis;
 
 class RegistrationFormDataHandlerTest extends TestCase {
 	use RefreshDatabase;
@@ -21,6 +22,16 @@ class RegistrationFormDataHandlerTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database START");
+		$userId = 1;
+        $redisKey = 'user_' . $userId;
+
+        $userDataArray = json_decode(file_get_contents(base_path('tests/Fixtures/user.json')), true);
+        $userJson = json_encode($userDataArray);
+
+        Redis::shouldReceive('get')
+			->once()
+            ->with($redisKey)
+            ->andReturn($userJson);
 		$init = new ActionByMiddleware();
 		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');

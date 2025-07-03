@@ -16,6 +16,7 @@ use App\Grpc\Middlewares\ActionByMiddleware;
 use App\Models\UserDetailUserTeam;
 use App\Models\UserTeam;
 use Log;
+use Illuminate\Support\Facades\Redis;
 
 class AssignUserToTeamHandlerTest extends TestCase {
 	use RefreshDatabase;
@@ -30,6 +31,16 @@ class AssignUserToTeamHandlerTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database START");
+		$userId = 1;
+        $redisKey = 'user_' . $userId;
+
+        $userDataArray = json_decode(file_get_contents(base_path('tests/Fixtures/user.json')), true);
+        $userJson = json_encode($userDataArray);
+
+        Redis::shouldReceive('get')
+            ->times(2)
+            ->with($redisKey)
+            ->andReturn($userJson);
 		$init = new ActionByMiddleware();
 		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');
