@@ -15,15 +15,6 @@ services:
     networks:
       - network
 
-  redis:
-    image: redis:alpine
-    restart: unless-stopped
-    # ports:
-    #   - "6380:6379"
-    networks:
-      - network
-      - shared_net
-
   app:
     container_name: ums-app-1
     build:
@@ -42,6 +33,7 @@ services:
     networks:
       - network
       - grpc_network
+      - shared_net
 
 volumes:
   dbdata:

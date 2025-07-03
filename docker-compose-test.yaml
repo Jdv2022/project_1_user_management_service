@@ -33,6 +33,7 @@ services:
     networks:
       - network
       - grpc_network
+      - shared_net
 
 volumes:
   dbdata:
