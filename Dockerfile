@@ -5,7 +5,7 @@ FROM php:8.4-cli-bookworm
 # https://github.com/docker-library/docs/tree/0fbef0e8b8c403f581b794030f9180a68935af9d/php#how-to-install-more-php-extensions
 RUN --mount=type=bind,from=mlocati/php-extension-installer:2,source=/usr/bin/install-php-extensions,target=/usr/local/bin/install-php-extensions \
      install-php-extensions @composer-2 opcache zip intl sockets protobuf \
-	 pdo pdo_mysql bcmath mbstring fileinfo
+	 pdo pdo_mysql bcmath mbstring fileinfo redis
 
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
