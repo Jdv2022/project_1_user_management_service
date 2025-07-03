@@ -15,6 +15,15 @@ services:
     networks:
       - network
 
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    # ports:
+    #   - "6380:6379"
+    networks:
+      - network
+      - shared_net
+
   app:
     container_name: ums-app-1
     build:
@@ -39,6 +48,7 @@ volumes:
 
 networks:
   network:
+  shared_net:
   grpc_network:
     name: grpc_network
     driver: bridge
