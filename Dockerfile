@@ -10,7 +10,7 @@ RUN --mount=type=bind,from=mlocati/php-extension-installer:2,source=/usr/bin/ins
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 # Set working directory
-WORKDIR /var/www/sunset/user_management_service
+WORKDIR /var/www/html/sunset/user_management_service
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
