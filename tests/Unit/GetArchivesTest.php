@@ -15,7 +15,10 @@ use Log;
 use Illuminate\Support\Facades\Redis;
 use App\Models\UserDetail;
 
-class TestGetArchives extends TestCase {
+class GetArchivesTest extends TestCase {
+
+	private $action_by_user_id = 1;
+	private $tz = "TEST";
 
 	public function setUp(): void {
 		parent::setUp();
@@ -40,15 +43,15 @@ class TestGetArchives extends TestCase {
     public function test_get_archives(): void{
 		Log::info("Get Archives running...");
 
-		$teamListsHandler = new GetArchivesHandler(new CommonFunctions());
+		$getArchivesHandler = new GetArchivesHandler(new CommonFunctions());
 		$in = new GetArchivesRequest();
 		$ctx = $this->createMock(ContextInterface::class);
-		$result = $GetArchivesHandler->GetArchives($ctx, $in);
+		$result = $getArchivesHandler->GetArchives($ctx, $in);
 
 		$this->assertInstanceOf(GetArchivesResponse::class, $result);
-		$payload = $result->getGetArchives();
+		$payload = $result->GetArchives();
 		foreach ($payload as $item) {
-			$this->assertInstanceOf(UserDetail::class, $item);
+			$this->assertInstanceOf(GetArchives::class, $item);
 		}
     }
 }
