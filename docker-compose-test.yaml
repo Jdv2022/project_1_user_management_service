@@ -1,6 +1,6 @@
 services:
   mysql:
-    container_name: ums-mysql-1
+    container_name: ums-mysql-1-test
     image: mysql:8
     restart: unless-stopped
     environment:
@@ -16,7 +16,7 @@ services:
       - network
 
   app:
-    container_name: ums-app-1
+    container_name: ums-app-1-test
     build:
       context: .
     image: ${APP_NAME}
