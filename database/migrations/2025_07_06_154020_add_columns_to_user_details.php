@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('user_details', function (Blueprint $table) {
-			$table->boolean('is_archieved')->default(false);
-			$table->text('archieved_reason')->nullable();
+			$table->boolean('is_archive')->default(false);
+			$table->text('archive_reason')->nullable();
         });
     }
 
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('user_details', function (Blueprint $table) {
-			$table->dropColumn(['is_archieved', 'archieved_reason']);
+			$table->dropColumn(['is_archive', 'archive_reason']);
         });
     }
 };
