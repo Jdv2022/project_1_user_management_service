@@ -67,6 +67,7 @@ pipeline {
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
                                 cd /var/www/html/sunset/user_management_service_test &&
+								docker compose down
                                 docker compose up -d
                             '
                         """
