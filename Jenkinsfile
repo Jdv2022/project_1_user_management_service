@@ -67,9 +67,7 @@ pipeline {
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
                                 cd /var/www/html/sunset/user_management_service_test &&
-								(docker compose ps --services --filter "status=running" | grep -q app) &&
-								(docker compose ps --services --filter "status=running" | grep -q mysql) ||
-								docker compose up -d
+								docker compose up -d --remove-orphans
                             '
                         """
 						sh """
