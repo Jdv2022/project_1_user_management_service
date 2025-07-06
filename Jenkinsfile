@@ -72,12 +72,6 @@ pipeline {
                         """
 						sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
-                                cd /var/www/html/sunset/gateway &&
-                                docker exec -i gateway-app-1 ./setup.sh
-                            '
-                        """
-						sh """
-                            ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
                                 cd /var/www/html/sunset/user_management_service_test &&
                                 docker compose exec app ./vendor/bin/phpunit
                             '
@@ -140,7 +134,7 @@ pipeline {
 						sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
                                 cd /var/www/html/sunset/gateway &&
-                                docker exec -i gateway-app-1 ./setup.sh
+                                docker exec -i ums-app-1 ./setup.sh
                             '
                         """
                         sh """
