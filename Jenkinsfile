@@ -24,7 +24,7 @@ pipeline {
                             '
                         """
                         
-                        // Git pull with prune
+                        // Git pull with prunegit submodule update --init --recursive
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
                                 cd /var/www/html/sunset/user_management_service_test &&
@@ -34,6 +34,7 @@ pipeline {
                                     git fetch --prune
                                     git reset --hard origin/main
                                     git clean -fd
+									git submodule update --init --recursive
                                 fi
                             '
                         """
@@ -67,6 +68,12 @@ pipeline {
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
                                 cd /var/www/html/sunset/user_management_service_test &&
                                 docker compose -f docker-compose-test.yaml up -d
+                            '
+                        """
+						sh """
+                            ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
+                                cd /var/www/html/sunset/gateway &&
+                                docker exec -i gateway-app-1 ./setup.sh
                             '
                         """
 						sh """
@@ -110,6 +117,7 @@ pipeline {
                                     git fetch --prune
                                     git reset --hard origin/main
                                     git clean -fd
+									git submodule update --init --recursive
                                 fi
                             '
                         """
@@ -129,7 +137,12 @@ pipeline {
                                 composer install
                             '
                         """
-                    
+						sh """
+                            ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
+                                cd /var/www/html/sunset/gateway &&
+                                docker exec -i gateway-app-1 ./setup.sh
+                            '
+                        """
                         sh """
                             ssh -o StrictHostKeyChecking=no jd@212.85.25.94 '
                                 sudo chown -R jd:www-data /var/www/html/sunset/user_management_service &&
