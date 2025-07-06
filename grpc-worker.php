@@ -14,6 +14,7 @@ use grpc\TeamLists\TeamListsServiceInterface;
 use grpc\getAttendance\GetAttendanceInterface;
 use grpc\CreateShift\CreateShiftServiceInterface;
 use grpc\AssignUserShift\AssignUserShiftServiceInterface;
+use grpc\GetArchives\GetArchivesServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
 use App\Grpc\Handlers\RegistrationFormDataHandler;
@@ -24,6 +25,7 @@ use App\Grpc\Handlers\GetAttendanceHandler;
 use App\Grpc\Handlers\TeamListsHandler;
 use App\Grpc\Handlers\CreateShiftHandler;
 use App\Grpc\Handlers\AssignUserShiftHandler;
+use App\Grpc\Handlers\GetArchivesHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -44,5 +46,6 @@ $server->registerService(GetAttendanceInterface::class, new GetAttendanceHandler
 $server->registerService(TeamListsServiceInterface::class, new TeamListsHandler(new CommonFunctions));
 $server->registerService(CreateShiftServiceInterface::class, new CreateShiftHandler(new CommonFunctions));
 $server->registerService(AssignUserShiftServiceInterface::class, new AssignUserShiftHandler(new CommonFunctions));
+$server->registerService(GetArchivesServiceInterface::class, new GetArchivesHandler(new CommonFunctions));
 
 $server->serve(Worker::create());
