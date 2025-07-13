@@ -16,6 +16,8 @@ use grpc\CreateShift\CreateShiftServiceInterface;
 use grpc\AssignUserShift\AssignUserShiftServiceInterface;
 use grpc\GetArchives\GetArchivesServiceInterface;
 use grpc\AddArchive\AddArchiveServiceInterface;
+use grpc\getLogs\GetLogsServiceInterface;
+use grpc\Overview\OverviewServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
 use App\Grpc\Handlers\RegistrationFormDataHandler;
@@ -28,6 +30,8 @@ use App\Grpc\Handlers\CreateShiftHandler;
 use App\Grpc\Handlers\AssignUserShiftHandler;
 use App\Grpc\Handlers\GetArchivesHandler;
 use App\Grpc\Handlers\AddArchiveHandler;
+use App\Grpc\Handlers\GetLogsHandler;
+use App\Grpc\Handlers\OverviewHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -50,5 +54,7 @@ $server->registerService(CreateShiftServiceInterface::class, new CreateShiftHand
 $server->registerService(AssignUserShiftServiceInterface::class, new AssignUserShiftHandler(new CommonFunctions));
 $server->registerService(GetArchivesServiceInterface::class, new GetArchivesHandler(new CommonFunctions));
 $server->registerService(AddArchiveServiceInterface::class, new AddArchiveHandler(new CommonFunctions));
+$server->registerService(GetLogsServiceInterface::class, new GetLogsHandler(new CommonFunctions));
+$server->registerService(OverviewServiceInterface::class, new OverviewHandler(new CommonFunctions));
 
 $server->serve(Worker::create());
