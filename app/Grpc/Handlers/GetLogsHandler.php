@@ -5,6 +5,7 @@ namespace App\Grpc\Handlers;
 use grpc\GetLogs\GetLogsServiceInterface;
 use grpc\GetLogs\GetLogsResponse;
 use grpc\GetLogs\GetLogsRequest;
+use grpc\GetLogs\Logs;
 use Spiral\RoadRunner\GRPC\ContextInterface;
 use App\Grpc\Middlewares\ActionByMiddleware;
 use App\Grpc\Services\CommonFunctions;
@@ -19,35 +20,27 @@ class GetLogsHandler extends ActionByMiddleware implements GetLogsServiceInterfa
 		$this->commonFunctions = $commonFunctions;
 	}
 
-	public function AddArchive(ContextInterface $ctx, GetLogsRequest $in): GetLogsResponse {
+	public function GetLogs(ContextInterface $ctx, GetLogsRequest $in): GetLogsResponse {
 		Log::info('addArchive');
 		
 		$res = new GetLogsResponse();
 		
 		$fk = $in->getFk();
 		$timezone = $in->getTimezone();
-		$description = $in->getDescription();
-		$current_page = $in->getCurrentPage();
-		$per_page = $in->getPerPage();
-		$search = $in->getSearch();
-		$sort = $in->getSort();
-		$sortColumn = $in->getSortColumn();
-
-		if($search == '') {
-			$result = UserLog::orderBy($sortColumn, $sort)
-				->paginate($per_page);
-		}
-		else {
-			$result = UserLog::where('description', 'like', '%'.$search.'%')
-				->orWhere('created_at', 'like', '%'.$search.'%')
-				->orWhere('created_by', 'like', '%'.$search.'%')
-				->orderBy($sortColumn, $sort)
-				->paginate($per_page);
-		}
 		
-		$final = PaginationService::paginate($result, $current_page, $per_page, count($result));
+		$data = UserLog::get();
 
-		return $final;
+		$logs = $data->map(function ($item) use ($timezone) {
+			return new Logs([
+				'id' => $item->id,
+				'description' => $item->description,
+				'created_at' => $item->created_at,
+				'created_by' => $item->created_by,
+			]);
+		});
+
+		$res->setLogs($logs->all());
+		return $res;
 	}
 
 }
