@@ -3,41 +3,46 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Grpc\Services\CommonFunctions;
-use App\Grpc\Middlewares\ActionByMiddleware;
-use grpc\Register\RegisterServiceInterface;
-use grpc\Register\RegisterUserDetailsRequest;
-use grpc\Register\RegisterUserDetailsResponse;
+use grpc\EditUserDetails\EditServiceInterface;
+use grpc\EditUserDetails\EditUserDetailsRequest;
+use grpc\EditUserDetails\EditUserDetailsResponse;
 use Spiral\RoadRunner\GRPC\ContextInterface;
-use App\Grpc\Handlers\RegisterUserHandler;
+use App\Grpc\Services\CommonFunctions;
+use App\Grpc\Handlers\EditUserDetailsHandler;
 use Illuminate\Foundation\Testing\RefreshDatabase; 
-use Illuminate\Support\Facades\Redis;
+use App\Grpc\Middlewares\ActionByMiddleware;
+use App\Models\UserRole;
 use App\Models\UserDetail;
+use App\Models\UserDepartment;
+use App\Models\UserDetailUserRole;
+use App\Models\UserDetailUserDepartment;
 use Log;
+use Illuminate\Support\Facades\Redis;
 
-class RegisterUserhandlerTest extends TestCase {
+class EditUserDetailsHandlerTest extends TestCase {
 	use RefreshDatabase;
 
 	private $action_by_user_id = 1;
 	private $tz = "TEST";
-	private $first_name = "Test JD";
-	private $middle_name = "JD";
-	private $last_name = "JD";
-	private $email = "JD@com";
+	private $first_name = "Test JD edited";
+	private $middle_name = "JD edited";
+	private $last_name = "JD edited";
+	private $email = "JD@com.edited";
 	private $phone = "0219370914";
-	private $address = "TEST ADdress";
+	private $address = "TEST ADdress edited";
 	private $department = "Pending Selection";
 	private $date_of_birth = '2025-05-25 00:00:00';
 	private $gender = true;
-	private $position = "Admin";
-	private $profile_image = "TEST PROFILE IMAGE";
-	private $set_profile_image_u_r_l = "TEST SET PROFILE IMAGE URL";
-	private $set_profile_image_Name = "TEST SET PROFILE IMAGE NAME";
+	private $position = "Manager";
+	private $profile_image = "TEST PROFILE IMAGE edited";
+	private $set_profile_image_u_r_l = "TEST SET PROFILE IMAGE URL edited";
+	private $set_profile_image_Name = "TEST SET PROFILE IMAGE NAME edited";
 	private $fk = 1;
-	
+
 	public function setUp(): void {
 		parent::setUp();
 		Log::info("Migrating Database START");
+
 		$userId = 1;
         $redisKey = 'user_' . $userId;
 
@@ -45,9 +50,10 @@ class RegisterUserhandlerTest extends TestCase {
         $userJson = json_encode($userDataArray);
 
         Redis::shouldReceive('get')
-			->times(3)
+            ->times(2)
             ->with($redisKey)
             ->andReturn($userJson);
+
 		$init = new ActionByMiddleware();
 		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');
@@ -55,12 +61,12 @@ class RegisterUserhandlerTest extends TestCase {
 		Log::info("Migrating Database END");
 	}
 
-	public function test_register_user_details_handler() {
-		Log::info("RegisterUserHandlerTest running...");
+	public function test_edit_user_details() {
+		Log::info("EditUserDetailHandlerTest running...");
 
-		$registerUserHandler = new RegisterUserHandler(new CommonFunctions());
+		$registerUserHandler = new EditUserDetailsHandler(new CommonFunctions());
 		$ctx = $this->createMock(ContextInterface::class);
-		$in = new RegisterUserDetailsRequest();
+		$in = new EditUserDetailsRequest();
 		$in->setActionByUserId($this->action_by_user_id);
 		$in->setTimeZone($this->tz);
 		$in->setFirstName($this->first_name);
@@ -77,13 +83,14 @@ class RegisterUserhandlerTest extends TestCase {
 		$in->setSetProfileImageURL($this->set_profile_image_u_r_l);
 		$in->setSetProfileImageName($this->set_profile_image_Name);
 
-		$result = $registerUserHandler->RegisterUserDetails($ctx, $in);
+		$result = $registerUserHandler->EditUserDetails($ctx, $in);
 
-		$this->assertInstanceOf(RegisterUserDetailsResponse::class, $result);
+		$this->assertInstanceOf(EditUserDetailsResponse::class, $result);
 		$this->assertTrue($result->getResult());
-
-		$model = UserDetail::find(2);
-
+		Log::debug(UserDetail::first()->toArray());
+		$model = UserDetail::find(1);
+		$model2 = UserRole::where('type_1', $this->position)->first();
+		$model3 = UserDepartment::where('department_name', $this->department)->first();
 		$this->assertEquals($this->first_name, $model->first_name);
 		$this->assertEquals($this->middle_name, $model->middle_name);
 		$this->assertEquals($this->last_name, $model->last_name);
@@ -92,15 +99,10 @@ class RegisterUserhandlerTest extends TestCase {
 		$this->assertEquals($this->address, $model->address);
 		$this->assertEquals($this->date_of_birth, $model->date_of_birth);
 		$this->assertEquals($this->gender, $model->gender);
+		$this->assertEquals($this->position, $model2->type_1);
+		$this->assertEquals($this->department, $model3->department_name);
 		$this->assertEquals($this->set_profile_image_u_r_l, $model->profile_image_url);
 		$this->assertEquals($this->set_profile_image_Name, $model->profile_image_name);
-
-		$this->assertEquals($this->action_by_user_id, $model->created_by_user_id);
-		$this->assertEquals($this->action_by_user_id, $model->updated_by_user_id);
-		$this->assertEquals($this->tz, $model->created_at_timezone);
-		$this->assertEquals($this->tz, $model->updated_at_timezone);
-
-		$this->assertEquals($this->fk, $model->user_id);
 	}
 
 }

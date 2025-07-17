@@ -18,6 +18,7 @@ use grpc\GetArchives\GetArchivesServiceInterface;
 use grpc\AddArchive\AddArchiveServiceInterface;
 use grpc\getLogs\GetLogsServiceInterface;
 use grpc\Overview\OverviewServiceInterface;
+use grpc\EditUserDetails\EditUserDetailsServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
 use App\Grpc\Handlers\RegistrationFormDataHandler;
@@ -32,6 +33,7 @@ use App\Grpc\Handlers\GetArchivesHandler;
 use App\Grpc\Handlers\AddArchiveHandler;
 use App\Grpc\Handlers\GetLogsHandler;
 use App\Grpc\Handlers\OverviewHandler;
+use App\Grpc\Handlers\EditUserDetailsHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -56,5 +58,6 @@ $server->registerService(GetArchivesServiceInterface::class, new GetArchivesHand
 $server->registerService(AddArchiveServiceInterface::class, new AddArchiveHandler(new CommonFunctions));
 $server->registerService(GetLogsServiceInterface::class, new GetLogsHandler(new CommonFunctions));
 $server->registerService(OverviewServiceInterface::class, new OverviewHandler(new CommonFunctions));
+$server->registerService(EditUserDetailsServiceInterface::class, new EditUserDetailsHandler(new CommonFunctions));
 
 $server->serve(Worker::create());
