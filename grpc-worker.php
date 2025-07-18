@@ -19,6 +19,7 @@ use grpc\AddArchive\AddArchiveServiceInterface;
 use grpc\getLogs\GetLogsServiceInterface;
 use grpc\Overview\OverviewServiceInterface;
 use grpc\EditUserDetails\EditUserDetailsServiceInterface;
+use grpc\CreateTeam\CreateTeamServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
 use App\Grpc\Handlers\RegistrationFormDataHandler;
@@ -34,6 +35,7 @@ use App\Grpc\Handlers\AddArchiveHandler;
 use App\Grpc\Handlers\GetLogsHandler;
 use App\Grpc\Handlers\OverviewHandler;
 use App\Grpc\Handlers\EditUserDetailsHandler;
+use App\Grpc\Handlers\CreateTeamHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -52,6 +54,7 @@ $server->registerService(UserClockInServiceInterface::class, new UserClockInHand
 $server->registerService(UserClockOutServiceInterface::class, new UserClockOutHandler(new CommonFunctions));
 $server->registerService(GetAttendanceInterface::class, new GetAttendanceHandler(new CommonFunctions));
 $server->registerService(TeamListsServiceInterface::class, new TeamListsHandler(new CommonFunctions));
+$server->registerService(CreateTeamServiceInterface::class, new CreateTeamHandler(new CommonFunctions));
 $server->registerService(CreateShiftServiceInterface::class, new CreateShiftHandler(new CommonFunctions));
 $server->registerService(AssignUserShiftServiceInterface::class, new AssignUserShiftHandler(new CommonFunctions));
 $server->registerService(GetArchivesServiceInterface::class, new GetArchivesHandler(new CommonFunctions));

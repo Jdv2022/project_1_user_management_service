@@ -7,10 +7,11 @@ use Spiral\RoadRunner\GRPC\ContextInterface;
 use App\Grpc\Services\CommonFunctions;
 use grpc\CreateTeam\CreateTeamResponse;
 use grpc\CreateTeam\CreateTeamRequest;
+use grpc\CreateTeam\CreateTeamServiceInterface;
 use App\Models\UserTeam;
 use Log;
 
-class CreateTeamHandler extends ActionByMiddleware {
+class CreateTeamHandler extends ActionByMiddleware implements CreateTeamServiceInterface {
 
 	public function __construct(CommonFunctions $commonFunctions) {
 		$this->commonFunctions = $commonFunctions;
