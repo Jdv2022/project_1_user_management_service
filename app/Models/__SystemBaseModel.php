@@ -84,12 +84,12 @@ class __SystemBaseModel extends Model
 
 			return;
 		}
-
+		Log::info("Creating Attributes...");
         static::creating(function ($model) {
             $model->setCreatedAttributes();
             $model->setUpdatedAttributes();
         });
-
+		Log::info("Updating Attributes...");
         static::updating(function ($model) {
             $model->setUpdatedAttributes();
         });

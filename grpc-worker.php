@@ -20,6 +20,7 @@ use grpc\getLogs\GetLogsServiceInterface;
 use grpc\Overview\OverviewServiceInterface;
 use grpc\EditUserDetails\EditUserDetailsServiceInterface;
 use grpc\CreateTeam\CreateTeamServiceInterface;
+use grpc\EditTeam\EditTeamServiceInterface;
 use grpc\TeamUsersLists\TeamUsersListsServiceInterface;
 use grpc\SuggestedMember\SuggestedMemberServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
@@ -40,6 +41,7 @@ use App\Grpc\Handlers\EditUserDetailsHandler;
 use App\Grpc\Handlers\GetTeamUsersListsHandler;
 use App\Grpc\Handlers\CreateTeamHandler;
 use App\Grpc\Handlers\SuggestedMemberHandler;
+use App\Grpc\Handlers\EditTeamHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -68,5 +70,6 @@ $server->registerService(GetLogsServiceInterface::class, new GetLogsHandler(new 
 $server->registerService(OverviewServiceInterface::class, new OverviewHandler(new CommonFunctions));
 $server->registerService(EditUserDetailsServiceInterface::class, new EditUserDetailsHandler(new CommonFunctions));
 $server->registerService(SuggestedMemberServiceInterface::class, new SuggestedMemberHandler(new CommonFunctions));
+$server->registerService(EditTeamServiceInterface::class, new EditTeamHandler(new CommonFunctions));
 
 $server->serve(Worker::create());
