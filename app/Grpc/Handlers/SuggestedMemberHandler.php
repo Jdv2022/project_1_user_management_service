@@ -24,21 +24,23 @@ class SuggestedMemberHandler extends ActionByMiddleware implements SuggestedMemb
 
 		$response = new SuggestedMemberResponse();
 
-		$suggestedMember = UserDetail::with('userTeams')->get();
+		$suggestedMember = UserDetail::with('userTeams', 'userDepartments')->get();
 
 		$teamArray = [];
 		foreach($suggestedMember as $teamList) {
-			$is_on_team = true;
+			$is_on_team = 'true';
 			if($teamList->userTeams->isEmpty()) {
-				$is_on_team = false;
+				$is_on_team = 'false';
 			}
+			$name = $teamList->first_name . " " . $teamList->last_name;
+
 			$teams = new member([
 				'id' => $teamList->id,
-				'name' => $teamList->team_name,
-				'department' => $teamList->description,
+				'name' => $name,
+				'department' => $teamList->userDepartments['department_name'] ?? '-',
 				'is_on_team' => $is_on_team,
-				'profile_image_url' => $teamList->updated_at,
-				'profile_image_name' => $teamList->updated_at,
+				'profile_image_url' => $teamList->profile_image_url,
+				'profile_image_name' => $teamList->profile_image_name,
 			]);
 			$teamArray[] = $teams;
 		}

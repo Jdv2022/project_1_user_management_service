@@ -26,9 +26,9 @@ class member extends \Google\Protobuf\Internal\Message
      */
     protected $department = '';
     /**
-     * Generated from protobuf field <code>bool is_on_team = 4;</code>
+     * Generated from protobuf field <code>string is_on_team = 4;</code>
      */
-    protected $is_on_team = false;
+    protected $is_on_team = '';
     /**
      * Generated from protobuf field <code>string profile_image_url = 6;</code>
      */
@@ -47,7 +47,7 @@ class member extends \Google\Protobuf\Internal\Message
      *     @type int|string $id
      *     @type string $name
      *     @type string $department
-     *     @type bool $is_on_team
+     *     @type string $is_on_team
      *     @type string $profile_image_url
      *     @type string $profile_image_name
      * }
@@ -124,8 +124,8 @@ class member extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool is_on_team = 4;</code>
-     * @return bool
+     * Generated from protobuf field <code>string is_on_team = 4;</code>
+     * @return string
      */
     public function getIsOnTeam()
     {
@@ -133,13 +133,13 @@ class member extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool is_on_team = 4;</code>
-     * @param bool $var
+     * Generated from protobuf field <code>string is_on_team = 4;</code>
+     * @param string $var
      * @return $this
      */
     public function setIsOnTeam($var)
     {
-        GPBUtil::checkBool($var);
+        GPBUtil::checkString($var, True);
         $this->is_on_team = $var;
 
         return $this;
