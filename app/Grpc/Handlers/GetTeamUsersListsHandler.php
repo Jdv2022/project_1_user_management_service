@@ -12,6 +12,7 @@ use grpc\TeamUsersLists\TeamUsersListsServiceInterface;
 use App\Models\UserDetailUserShift;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserTeam;
+use App\Models\UserDetailUserTeam;
 use Log;
 
 class GetTeamUsersListsHandler extends ActionByMiddleware implements TeamUsersListsServiceInterface {

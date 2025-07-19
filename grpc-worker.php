@@ -23,6 +23,8 @@ use grpc\CreateTeam\CreateTeamServiceInterface;
 use grpc\EditTeam\EditTeamServiceInterface;
 use grpc\TeamUsersLists\TeamUsersListsServiceInterface;
 use grpc\SuggestedMember\SuggestedMemberServiceInterface;
+use grpc\AssignUserToTeam\AssignUserToTeamServiceInterface;
+use grpc\RemoveUserTeam\RemoveUserTeamServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
 use App\Grpc\Handlers\RegistrationFormDataHandler;
@@ -42,6 +44,8 @@ use App\Grpc\Handlers\GetTeamUsersListsHandler;
 use App\Grpc\Handlers\CreateTeamHandler;
 use App\Grpc\Handlers\SuggestedMemberHandler;
 use App\Grpc\Handlers\EditTeamHandler;
+use App\Grpc\Handlers\AssignUserToTeamHandler;
+use App\Grpc\Handlers\RemoveUserTeamHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -61,6 +65,7 @@ $server->registerService(UserClockOutServiceInterface::class, new UserClockOutHa
 $server->registerService(GetAttendanceInterface::class, new GetAttendanceHandler(new CommonFunctions));
 $server->registerService(TeamListsServiceInterface::class, new TeamListsHandler(new CommonFunctions));
 $server->registerService(TeamUsersListsServiceInterface::class, new GetTeamUsersListsHandler(new CommonFunctions));
+$server->registerService(AssignUserToTeamServiceInterface::class, new  AssignUserToTeamHandler(new CommonFunctions));
 $server->registerService(CreateTeamServiceInterface::class, new CreateTeamHandler(new CommonFunctions));
 $server->registerService(CreateShiftServiceInterface::class, new CreateShiftHandler(new CommonFunctions));
 $server->registerService(AssignUserShiftServiceInterface::class, new AssignUserShiftHandler(new CommonFunctions));
@@ -71,5 +76,6 @@ $server->registerService(OverviewServiceInterface::class, new OverviewHandler(ne
 $server->registerService(EditUserDetailsServiceInterface::class, new EditUserDetailsHandler(new CommonFunctions));
 $server->registerService(SuggestedMemberServiceInterface::class, new SuggestedMemberHandler(new CommonFunctions));
 $server->registerService(EditTeamServiceInterface::class, new EditTeamHandler(new CommonFunctions));
+$server->registerService(RemoveUserTeamServiceInterface::class, new RemoveUserTeamHandler(new CommonFunctions));
 
 $server->serve(Worker::create());

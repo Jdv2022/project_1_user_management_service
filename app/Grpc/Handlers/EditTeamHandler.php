@@ -29,6 +29,10 @@ class EditTeamHandler extends ActionByMiddleware implements EditTeamServiceInter
 		$this->initializeActionByUser((int)$actionByUserId, $tz);
 
 		$model = UserTeam::find($team_id);
+		if($model->team_name == $teamName) {
+			Log::debug("Team Already Exists!");
+			return new EditTeamResponse(['result' => "Team Already Exists!"]);
+		}
 		$model->team_name = $teamName;
 		$model->description = $description;
 		$model->save();

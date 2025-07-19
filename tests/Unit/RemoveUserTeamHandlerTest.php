@@ -4,11 +4,11 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase; 
-use grpc\AssignUserToTeam\AssignUserToTeamResponse;
-use grpc\AssignUserToTeam\AssignUserToTeamRequest;
-use grpc\AssignUserToTeam\fK;
+use grpc\RemoveUserTeam\RemoveUserTeamResponse;
+use grpc\RemoveUserTeam\RemoveUserTeamRequest;
+use grpc\RemoveUserTeam\fK;
 use Spiral\RoadRunner\GRPC\ContextInterface;
-use App\Grpc\Handlers\AssignUserToTeamHandler;
+use App\Grpc\Handlers\RemoveUserTeamHandler;
 use App\Grpc\Services\CommonFunctions;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBType;
@@ -18,7 +18,7 @@ use App\Models\UserTeam;
 use Log;
 use Illuminate\Support\Facades\Redis;
 
-class AssignUserToTeamHandlerTest extends TestCase {
+class RemoveUserTeamHandlerTest extends TestCase {
 	use RefreshDatabase;
 
 	private $team_name = "TEST team";
@@ -44,38 +44,39 @@ class AssignUserToTeamHandlerTest extends TestCase {
 		$init = new ActionByMiddleware();
 		$init->initializeActionByUser($this->action_by_user_id, $this->tz);
 		$this->artisan('migrate');
+		$this->artisan('db:seed');
 		UserTeam::create([
 			'team_name' => $this->team_name,
 			'description' => $this->description
 		]);
-		$this->artisan('db:seed');
+		UserDetailUserTeam::create([
+			'user_detail_id' => 1,
+			'user_team_id' => 1
+		]);
 		Log::info("Migrating Database END");
 	}
 
-	public function test_assign_user_to_team() {
+	public function test_remove_user() {
+		Log::info("Removing User START");
+
 		Log::info("CreateTeamHandlerTest running...");
 
-		$in = new AssignUserToTeamRequest();
+		$in = new RemoveUserTeamRequest();
 		$in->setActionByUserId($this->action_by_user_id);
-		$in->getFk()[] = new fK(['fk' => $this->user_detail_id]);
+		$in->setFk(1);
 		$in->setTeamId($this->user_team_id);
 		$in->setTimezone($this->tz);
 
 		$ctx = $this->createMock(ContextInterface::class);
-		$createTeamHandler = new AssignUserToTeamHandler(new CommonFunctions());
-		$result = $createTeamHandler->AssignUser($ctx, $in);
+		$createTeamHandler = new RemoveUserTeamHandler(new CommonFunctions());
+		$result = $createTeamHandler->RemoveUserTeam($ctx, $in);
 
-		$this->assertInstanceOf(AssignUserToTeamResponse::class, $result);
+		$this->assertInstanceOf(RemoveUserTeamResponse::class, $result);
 		$this->assertTrue($result->getResult());
 
 		$res = UserDetailUserTeam::first();
-		$this->assertNotNull($res);
-		$this->assertEquals($this->action_by_user_id, $res->created_by_user_id);
-		$this->assertEquals($this->tz, $res->created_at_timezone);
-		$this->assertEquals($this->action_by_user_id, $res->updated_by_user_id);
-		$this->assertEquals($this->tz, $res->updated_at_timezone);
-		$this->assertEquals($this->user_detail_id, $res->user_detail_id);
-		$this->assertEquals($this->user_team_id, $res->user_team_id);
+		$this->assertNull($res);
 	}
+
 
 }

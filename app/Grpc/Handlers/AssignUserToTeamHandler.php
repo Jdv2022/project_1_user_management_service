@@ -10,14 +10,15 @@ use grpc\AssignUserToTeam\AssignUserToTeamRequest;
 use App\Models\UserDetailUserTeam;
 use Illuminate\Support\Facades\DB;
 use Log;
+use grpc\AssignUserToTeam\AssignUserToTeamServiceInterface;
 
-class AssignUserToTeamHandler extends ActionByMiddleware {
+class AssignUserToTeamHandler extends ActionByMiddleware implements AssignUserToTeamServiceInterface {
 
 	public function __construct(CommonFunctions $commonFunctions) {
 		$this->commonFunctions = $commonFunctions;
 	}
 
-	public function assignUserToTeam(ContextInterface $ctx, AssignUserToTeamRequest $in): AssignUserToTeamResponse {
+	public function AssignUser(ContextInterface $ctx, AssignUserToTeamRequest $in): AssignUserToTeamResponse {
 		Log::info("assignUserToTeam running...");
 		$howManyPerchunks = 10;
 

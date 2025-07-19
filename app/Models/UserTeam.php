@@ -8,7 +8,7 @@ class UserTeam extends __SystemBaseModel {
 	protected $guarded = [];
 
 	public function userDetails() {
-		return $this->belongsToMany(UserDetail::class, 'user_detail_user_teams', 'user_detail_id', 'user_team_id')
+		return $this->belongsToMany(UserDetail::class, 'user_detail_user_teams', 'user_team_id', 'user_detail_id')
 			->withPivot([
 				'id',
 				'created_at',
