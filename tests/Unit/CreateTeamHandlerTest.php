@@ -47,7 +47,7 @@ class CreateTeamHandlerTest extends TestCase {
 		$result = $createTeamHandler->CreateTeam($ctx, $in);
 
 		$this->assertInstanceOf(CreateTeamResponse::class, $result);
-		$this->assertTrue($result->getResult());
+		$this->assertEquals(1, $result->getResult());
     }
 
 }

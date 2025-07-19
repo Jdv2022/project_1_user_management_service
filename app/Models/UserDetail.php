@@ -47,6 +47,24 @@ class UserDetail extends __SystemBaseModel {
 			]);	
 	}
 
+	public function userTeams() {
+		return $this->belongsToMany(UserTeam::class, 'user_detail_user_teams', 'user_detail_id', 'user_team_id')
+			->withPivot([
+				'id',
+				'created_at',
+				'created_at_timezone',
+				'created_by_user_id',
+				'created_by_username',
+				'created_by_user_type',
+				'updated_at',
+				'updated_at_timezone',
+				'updated_by_user_id',
+				'updated_by_username',
+				'updated_by_user_type',
+				'enabled'
+			]);	
+	}
+
 	public function userAttendance() {
 		return $this->hasMany(UserAttendance::class);
 	}

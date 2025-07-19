@@ -27,20 +27,24 @@ class CreateTeamHandler extends ActionByMiddleware implements CreateTeamServiceI
 
 		$this->initializeActionByUser((int)$actionByUserId, $tz);
 
-		$team = new UserTeam();
-		$result = $team->create([
+		if(UserTeam::where('team_name', $teamName)->exists()) {
+			Log::debug("Team Already Exists!");
+			return new CreateTeamResponse(['result' => "Team Already Exists!"]);
+		}
+
+		$result = UserTeam::create([
 			"team_name" => $teamName,
 			"description" => $description
 		]);
-
+		Log::debug("Team Created: " . json_encode($result, JSON_PRETTY_PRINT));
 		$response = new CreateTeamResponse();
 		if($result) {
-			Log::info("Team Created!");
-			return $response->setResult(true);
+			Log::info("Team Created! ID: " . $result->id);
+			return $response->setResult($result->id);
 		}
 		else {
 			Log::info("Team Not Created!");
-			return $response->setResult(false);
+			return $response->setResult("Team Not Created!");
 		}
 	}
 

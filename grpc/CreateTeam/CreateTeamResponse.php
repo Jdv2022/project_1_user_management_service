@@ -14,9 +14,9 @@ use Google\Protobuf\Internal\GPBUtil;
 class CreateTeamResponse extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>bool result = 1;</code>
+     * Generated from protobuf field <code>string result = 1;</code>
      */
-    protected $result = false;
+    protected $result = '';
 
     /**
      * Constructor.
@@ -24,7 +24,7 @@ class CreateTeamResponse extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type bool $result
+     *     @type string $result
      * }
      */
     public function __construct($data = NULL) {
@@ -33,8 +33,8 @@ class CreateTeamResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool result = 1;</code>
-     * @return bool
+     * Generated from protobuf field <code>string result = 1;</code>
+     * @return string
      */
     public function getResult()
     {
@@ -42,13 +42,13 @@ class CreateTeamResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool result = 1;</code>
-     * @param bool $var
+     * Generated from protobuf field <code>string result = 1;</code>
+     * @param string $var
      * @return $this
      */
     public function setResult($var)
     {
-        GPBUtil::checkBool($var);
+        GPBUtil::checkString($var, True);
         $this->result = $var;
 
         return $this;
