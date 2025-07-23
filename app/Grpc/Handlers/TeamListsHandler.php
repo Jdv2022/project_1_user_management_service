@@ -39,7 +39,6 @@ class TeamListsHandler extends ActionByMiddleware implements TeamListsServiceInt
 		}
 		$response->setTeamLists($teamArray);
 
-
 		return $response;
 	}	
 

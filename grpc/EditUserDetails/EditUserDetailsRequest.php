@@ -62,13 +62,13 @@ class EditUserDetailsRequest extends \Google\Protobuf\Internal\Message
      */
     protected $action_by_user_id = '';
     /**
-     * Generated from protobuf field <code>string set_profile_image_u_r_l = 13;</code>
+     * Generated from protobuf field <code>string profile_image_u_r_l = 13;</code>
      */
-    protected $set_profile_image_u_r_l = '';
+    protected $profile_image_u_r_l = '';
     /**
-     * Generated from protobuf field <code>string set_profile_image_Name = 14;</code>
+     * Generated from protobuf field <code>string profile_image_Name = 14;</code>
      */
-    protected $set_profile_image_Name = '';
+    protected $profile_image_Name = '';
     /**
      * Generated from protobuf field <code>int64 fk = 15;</code>
      */
@@ -96,8 +96,8 @@ class EditUserDetailsRequest extends \Google\Protobuf\Internal\Message
      *     @type string $position
      *     @type string $profile_image
      *     @type string $action_by_user_id
-     *     @type string $set_profile_image_u_r_l
-     *     @type string $set_profile_image_Name
+     *     @type string $profile_image_u_r_l
+     *     @type string $profile_image_Name
      *     @type int|string $fk
      *     @type string $timezone
      * }
@@ -372,45 +372,45 @@ class EditUserDetailsRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string set_profile_image_u_r_l = 13;</code>
+     * Generated from protobuf field <code>string profile_image_u_r_l = 13;</code>
      * @return string
      */
-    public function getSetProfileImageURL()
+    public function getProfileImageURL()
     {
-        return $this->set_profile_image_u_r_l;
+        return $this->profile_image_u_r_l;
     }
 
     /**
-     * Generated from protobuf field <code>string set_profile_image_u_r_l = 13;</code>
+     * Generated from protobuf field <code>string profile_image_u_r_l = 13;</code>
      * @param string $var
      * @return $this
      */
-    public function setSetProfileImageURL($var)
+    public function setProfileImageURL($var)
     {
         GPBUtil::checkString($var, True);
-        $this->set_profile_image_u_r_l = $var;
+        $this->profile_image_u_r_l = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>string set_profile_image_Name = 14;</code>
+     * Generated from protobuf field <code>string profile_image_Name = 14;</code>
      * @return string
      */
-    public function getSetProfileImageName()
+    public function getProfileImageName()
     {
-        return $this->set_profile_image_Name;
+        return $this->profile_image_Name;
     }
 
     /**
-     * Generated from protobuf field <code>string set_profile_image_Name = 14;</code>
+     * Generated from protobuf field <code>string profile_image_Name = 14;</code>
      * @param string $var
      * @return $this
      */
-    public function setSetProfileImageName($var)
+    public function setProfileImageName($var)
     {
         GPBUtil::checkString($var, True);
-        $this->set_profile_image_Name = $var;
+        $this->profile_image_Name = $var;
 
         return $this;
     }

@@ -25,6 +25,10 @@ use grpc\TeamUsersLists\TeamUsersListsServiceInterface;
 use grpc\SuggestedMember\SuggestedMemberServiceInterface;
 use grpc\AssignUserToTeam\AssignUserToTeamServiceInterface;
 use grpc\RemoveUserTeam\RemoveUserTeamServiceInterface;
+use grpc\DeleteTeam\DeleteTeamServiceInterface;
+use grpc\GetDepartment\GetDepartmentServiceInterface;
+use grpc\CreateDepartment\CreateDepartmentServiceInterface;
+use grpc\GetDepartmentDetail\GetDepartmentDetailServiceInterface;
 use App\Grpc\Handlers\RegisterUserHandler;
 use App\Grpc\Handlers\UserDetailsHandler;
 use App\Grpc\Handlers\RegistrationFormDataHandler;
@@ -46,6 +50,10 @@ use App\Grpc\Handlers\SuggestedMemberHandler;
 use App\Grpc\Handlers\EditTeamHandler;
 use App\Grpc\Handlers\AssignUserToTeamHandler;
 use App\Grpc\Handlers\RemoveUserTeamHandler;
+use App\Grpc\Handlers\DeleteTeamHandler;
+use App\Grpc\Handlers\GetDepartmentHandler;
+use App\Grpc\Handlers\CreateDepartmentHandler;
+use App\Grpc\Handlers\GetDepartmentDetailHandler;
 use App\Grpc\Services\CommonFunctions;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -77,5 +85,9 @@ $server->registerService(EditUserDetailsServiceInterface::class, new EditUserDet
 $server->registerService(SuggestedMemberServiceInterface::class, new SuggestedMemberHandler(new CommonFunctions));
 $server->registerService(EditTeamServiceInterface::class, new EditTeamHandler(new CommonFunctions));
 $server->registerService(RemoveUserTeamServiceInterface::class, new RemoveUserTeamHandler(new CommonFunctions));
+$server->registerService(DeleteTeamServiceInterface::class, new DeleteTeamHandler(new CommonFunctions));
+$server->registerService(GetDepartmentServiceInterface::class, new GetDepartmentHandler(new CommonFunctions));
+$server->registerService(CreateDepartmentServiceInterface::class, new CreateDepartmentHandler(new CommonFunctions));
+$server->registerService(GetDepartmentDetailServiceInterface::class, new GetDepartmentDetailHandler(new CommonFunctions));
 
 $server->serve(Worker::create());

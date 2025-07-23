@@ -46,8 +46,8 @@ class EditUserDetailsHandler extends ActionByMiddleware implements EditUserDetai
 			'gender' => $in->getGender(),
 			'enabled' => true,
 			'user_id' => $in->getFk(),
-			'profile_image_url' => $in->getSetProfileImageURL(),
-			'profile_image_name' => $in->getSetProfileImageName(),
+			'profile_image_url' => $in->getProfileImageURL(),
+			'profile_image_name' => $in->getProfileImageName(),
 		];
 
 		$userDetail = UserDetail::where('user_id', $data['user_id'])->first();

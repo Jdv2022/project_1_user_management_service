@@ -78,42 +78,16 @@ class CommonFunctions {
 					$responseModel->setUserDetailUserRolesUserRoleId($userDetailUserRole->user_role_id);
 				}
 			}
-
 			if($userDetailsObj->userDepartments->toArray()) {
 				$userDepartments = $userDetailsObj->userDepartments[0] ?? [];
-
 				if($userDepartments) {
 					$responseModel->setUserDepartmentsId($userDepartments->id);
 					$responseModel->setUserDepartmentsDepartmentName($userDepartments->department_name);
 					$responseModel->setUserDepartmentsDescription($userDepartments->description);
-					$responseModel->setUserDepartmentsLevel($userDepartments->level);
-					$responseModel->setUserDepartmentsStatus($userDepartments->status);
-					$responseModel->setUserDepartmentsCreatedAt($userDepartments->created_at);
-					$responseModel->setUserDepartmentsCreatedAtTimezone($userDepartments->created_at_timezone);
-					$responseModel->setUserDepartmentsCreatedByUserId($userDepartments->created_by_user_id);
-					$responseModel->setUserDepartmentsCreatedByUsername($userDepartments->created_by_username);
-					$responseModel->setUserDepartmentsCreatedByUserType($userDepartments->created_by_user_type);
-					$responseModel->setUserDepartmentsUpdatedAt($userDepartments->updated_at);
-					$responseModel->setUserDepartmentsUpdatedAtTimezone($userDepartments->updated_at_timezone);
-					$responseModel->setUserDepartmentsUpdatedByUserId($userDepartments->updated_by_user_id);
-					$responseModel->setUserDepartmentsUpdatedByUsername($userDepartments->updated_by_username);
-					$responseModel->setUserDepartmentsUpdatedByUserType($userDepartments->updated_by_user_type);
-					$responseModel->setUserDepartmentsEnabled($userDepartments->enabled);
 				}
 
 				if($userDetailsObj->userDepartments[0]->pivot->toArray()) {
 					$userDetailUserDepartment = $userDetailsObj->userDepartments[0]->pivot;
-					$responseModel->setUserDetailUserDepartmentsCreatedAt($userDetailUserDepartment->created_at?->toDateTimeString() ?? '');
-					$responseModel->setUserDetailUserDepartmentsCreatedAtTimezone($userDetailUserDepartment->created_at_timezone);
-					$responseModel->setUserDetailUserDepartmentsCreatedByUserId($userDetailUserDepartment->created_by_user_id);
-					$responseModel->setUserDetailUserDepartmentsCreatedByUsername($userDetailUserDepartment->created_by_username);
-					$responseModel->setUserDetailUserDepartmentsCreatedByUserType($userDetailUserDepartment->created_by_user_type);
-					$responseModel->setUserDetailUserDepartmentsUpdatedAt($userDetailUserDepartment->updated_at?->toDateTimeString() ?? '');
-					$responseModel->setUserDetailUserDepartmentsUpdatedAtTimezone($userDetailUserDepartment->updated_at_timezone);
-					$responseModel->setUserDetailUserDepartmentsUpdatedByUserId($userDetailUserDepartment->updated_by_user_id);
-					$responseModel->setUserDetailUserDepartmentsUpdatedByUsername($userDetailUserDepartment->updated_by_username);
-					$responseModel->setUserDetailUserDepartmentsUpdatedByUserType($userDetailUserDepartment->updated_by_user_type);
-					$responseModel->setUserDetailUserDepartmentsEnabled($userDetailUserDepartment->enabled);
 					$responseModel->setUserDetailUserDepartmentsUserDetailId($userDetailUserDepartment->user_detail_id);
 					$responseModel->setUserDetailUserDepartmentsUserDepartmentId($userDetailUserDepartment->user_department_id);
 				}

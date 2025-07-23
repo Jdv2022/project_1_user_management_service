@@ -35,8 +35,8 @@ class EditUserDetailsHandlerTest extends TestCase {
 	private $gender = true;
 	private $position = "Manager";
 	private $profile_image = "TEST PROFILE IMAGE edited";
-	private $set_profile_image_u_r_l = "TEST SET PROFILE IMAGE URL edited";
-	private $set_profile_image_Name = "TEST SET PROFILE IMAGE NAME edited";
+	private $profile_image_u_r_l = "TEST SET PROFILE IMAGE URL edited";
+	private $profile_image_Name = "TEST SET PROFILE IMAGE NAME edited";
 	private $fk = 1;
 
 	public function setUp(): void {
@@ -80,8 +80,8 @@ class EditUserDetailsHandlerTest extends TestCase {
 		$in->setFk($this->fk);
 		$in->setPosition($this->position);
 		$in->setDepartment($this->department);
-		$in->setSetProfileImageURL($this->set_profile_image_u_r_l);
-		$in->setSetProfileImageName($this->set_profile_image_Name);
+		$in->setProfileImageURL($this->profile_image_u_r_l);
+		$in->setProfileImageName($this->profile_image_Name);
 
 		$result = $registerUserHandler->EditUserDetails($ctx, $in);
 
@@ -101,8 +101,8 @@ class EditUserDetailsHandlerTest extends TestCase {
 		$this->assertEquals($this->gender, $model->gender);
 		$this->assertEquals($this->position, $model2->type_1);
 		$this->assertEquals($this->department, $model3->department_name);
-		$this->assertEquals($this->set_profile_image_u_r_l, $model->profile_image_url);
-		$this->assertEquals($this->set_profile_image_Name, $model->profile_image_name);
+		$this->assertEquals($this->profile_image_u_r_l, $model->profile_image_url);
+		$this->assertEquals($this->profile_image_Name, $model->profile_image_name);
 	}
 
 }
