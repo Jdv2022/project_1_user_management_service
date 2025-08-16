@@ -23,7 +23,7 @@ use grpc\CreateTeam\CreateTeamServiceInterface;
 use grpc\EditTeam\EditTeamServiceInterface;
 use grpc\TeamUsersLists\TeamUsersListsServiceInterface;
 use grpc\SuggestedMember\SuggestedMemberServiceInterface;
-use grpc\SuggestedDepartmentMember\SuggestedMDepartmentMemberServiceInterface;
+use grpc\SuggestedMemberDepartment\SuggestedMemberDepartmentServiceInterface;
 use grpc\AssignUserToTeam\AssignUserToTeamServiceInterface;
 use grpc\RemoveUserTeam\RemoveUserTeamServiceInterface;
 use grpc\DeleteTeam\DeleteTeamServiceInterface;
@@ -97,6 +97,6 @@ $server->registerService(CreateDepartmentServiceInterface::class, new CreateDepa
 $server->registerService(GetDepartmentDetailServiceInterface::class, new GetDepartmentDetailHandler(new CommonFunctions));
 $server->registerService(EditDepartmentServiceInterface::class, new EditDepartmentHandler(new CommonFunctions));
 $server->registerService(DeleteDepartmentServiceInterface::class, new DeleteDepartmentHandler(new CommonFunctions));
-$server->registerService(SuggestedMDepartmentMemberServiceInterface::class, new SuggestedMemberDepartmentHandler(new CommonFunctions));
+$server->registerService(SuggestedMemberDepartmentServiceInterface::class, new SuggestedMemberDepartmentHandler(new CommonFunctions));
 
 $server->serve(Worker::create());
