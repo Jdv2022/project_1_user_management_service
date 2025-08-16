@@ -25,7 +25,7 @@ class EditTeamHandler extends ActionByMiddleware implements EditTeamServiceInter
 		$description = $in->getDescription();
 		$tz = $in->getTimezone();
 		$team_id = $in->getTeamId();
-		Log::debug($actionByUserId);
+
 		$this->initializeActionByUser((int)$actionByUserId, $tz);
 
 		$model = UserTeam::find($team_id);

@@ -22,14 +22,14 @@ class OverviewTest extends TestCase {
 
 	private $siteVisits = [
 		[
-			'created_at' => '2025-07',
+			'created_at' => '2025-08',
 			'count' => 5,
 		]
 	];
 	
 	private $userData = [
 		[
-			'date' => '2025-07',
+			'date' => '2025-08',
 			'totalUser' => 12,
 		],
 	];
